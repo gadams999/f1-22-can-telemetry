@@ -15,11 +15,15 @@ import "source-map-support/register"
 import * as cdk from "aws-cdk-lib"
 import { F122TelemetryStack } from "../lib/f1-22-telemetry-stack"
 import * as Constants from "../lib/constants"
+import { AwsSolutionsChecks } from "cdk-nag"
 
 const app = new cdk.App()
+
 const name = process.env.STACK_NAME || Constants.STACK_NAME
 
 new F122TelemetryStack(app, name, {
   stackName: name,
   description: "EA Sports F1 2022 telemetry listening and CAN data export",
 })
+// Enable nag checks for the entire stack
+cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }))

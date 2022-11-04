@@ -17,6 +17,7 @@
     "@types/prettier": "2.6.0",
     "@types/seedrandom": "^3.0.2",
     "aws-cdk": "2.50.0",
+    "cdk-nag": "^2.19.11",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.9.1",
