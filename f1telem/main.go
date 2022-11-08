@@ -26,22 +26,27 @@ func main() {
 	buffer := make([]byte, 2048)
 
 	for {
-		// Read into buffer
+		// Read  UDP packet into buffer
 		n, addr, err := connection.ReadFromUDP(buffer)
 		if err != nil {
 			fmt.Print("read udp failed", n, addr, err)
 			continue
 		}
-		// fmt.Print("INP (size: ", n, ") -> ", buffer[:n], "\n")
+
+		// If event type is 6 (telemetry) process
 		eventType := packet.EventType(buffer)
-		fmt.Print("EVENT type: -> ", eventType, "\n")
-		if eventType == 0 {
-			motionData, err := packet.MotionPacket(buffer)
+		if eventType == 6 {
+			telemetryData, err := packet.TelemetryPacket(buffer)
 			if err != nil {
-				fmt.Print("Error parsing motion packet ", err)
+				fmt.Print("Error parsing telemetry packet ", err)
 			}
-			// fmt.Print("Motion packet: -> ", motionData, "\n")
-			fmt.Printf("%#v\n\n", motionData)
+
+			// Read the player's car telemetry
+			playerData, err := packet.PlayerData(telemetryData)
+			if err != nil {
+				fmt.Print("Error getting player data ", err)
+			}
+			fmt.Printf("%#v\n\n", playerData)
 		}
 	}
 }
