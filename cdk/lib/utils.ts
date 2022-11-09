@@ -10,6 +10,7 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under the License.
  **/
+import * as seedrandom from "seedrandom"
 import * as cdk from "aws-cdk-lib"
 import { Construct, IConstruct } from "constructs"
 
@@ -100,4 +101,24 @@ export function createCondition(
   const p = new cdk.CfnCondition(scope, name, props)
   p.overrideLogicalId(name)
   return new Condition(p)
+}
+
+/**
+ * Helper function for creating an n-length random string from a seed value
+ * @param length
+ * @param seed
+ * @returns string
+ */
+
+export function makeId(length: number, seed: string) {
+  // Generate a n-length random value for each resource
+  var result = ""
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  var charactersLength = characters.length
+  seedrandom(seed, { global: true })
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+  return result
 }

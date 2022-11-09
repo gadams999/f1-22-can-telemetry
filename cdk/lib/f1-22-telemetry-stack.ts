@@ -11,11 +11,12 @@
  * License for the specific language governing permissions and limitations under the License.
  **/
 import * as seedrandom from "seedrandom"
+import * as path from "path"
 import * as ec2 from "aws-cdk-lib/aws-ec2"
 import * as s3 from "aws-cdk-lib/aws-s3"
 import * as iam from "aws-cdk-lib/aws-iam"
 import * as cdk from "aws-cdk-lib"
-import { NagPack, NagSuppressions } from "cdk-nag"
+import { NagSuppressions } from "cdk-nag"
 import { Construct } from "constructs"
 import {
   AmazonLinuxGeneration,
@@ -23,7 +24,7 @@ import {
   InstanceType,
   SecurityGroup,
 } from "aws-cdk-lib/aws-ec2"
-import { VpcEndpointServiceDomainName } from "aws-cdk-lib/aws-route53"
+import { Asset } from "aws-cdk-lib/aws-s3-assets"
 
 export class F122TelemetryStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -60,7 +61,7 @@ export class F122TelemetryStack extends cdk.Stack {
       ],
     })
 
-    const vpcFlowLogRole = new iam.Role(this, "vpcFlowLogRole", {
+    const vpcFlowLogRole = new iam.Role(this, "VpcFlowLogRole", {
       assumedBy: new iam.ServicePrincipal("vpc-flow-logs.amazonaws.com"),
     })
     logFileBucket.grantWrite(vpcFlowLogRole, "sharedVpcFlowLogs/*")
@@ -76,7 +77,7 @@ export class F122TelemetryStack extends cdk.Stack {
       true
     )
 
-    const vpc = new ec2.Vpc(this, "listener-vpc", {
+    const vpc = new ec2.Vpc(this, "listenerVpc", {
       ipAddresses: ec2.IpAddresses.cidr("172.31.0.0/16"),
       maxAzs: 1,
       natGateways: 0,
@@ -90,7 +91,7 @@ export class F122TelemetryStack extends cdk.Stack {
     })
 
     // Create flow logs to S3
-    new ec2.FlowLog(this, "sharedVpcFlowLogs", {
+    new ec2.FlowLog(this, "SharedVpcFlowLogs", {
       destination: ec2.FlowLogDestination.toS3(
         logFileBucket,
         "sharedVpcFlowLogs/"
@@ -101,7 +102,7 @@ export class F122TelemetryStack extends cdk.Stack {
     })
 
     // Create security group for instance
-    const instanceSG = new ec2.SecurityGroup(this, "instance-sg", {
+    const instanceSG = new ec2.SecurityGroup(this, "InstanceSG", {
       vpc,
       allowAllOutbound: true,
     })
@@ -122,7 +123,7 @@ export class F122TelemetryStack extends cdk.Stack {
     )
 
     // Create a role for the instance
-    const instanceRole = new iam.Role(this, "instance-role", {
+    const instanceRole = new iam.Role(this, "InstanceRole", {
       roleName: "f1-telemetry-instance-profile",
       assumedBy: new iam.ServicePrincipal("ec2.amazonaws.com"),
       managedPolicies: [
@@ -146,7 +147,7 @@ export class F122TelemetryStack extends cdk.Stack {
     // instance type: tg4.large
     // arch: Arm
     // AMI: ami-0efabcf945ffd8831
-    const telemetryInstance = new ec2.Instance(this, "telemetry-instance", {
+    const telemetryInstance = new ec2.Instance(this, "TelemetryInstance", {
       instanceName: "telemetry-instance",
       vpc: vpc,
       vpcSubnets: {
@@ -186,6 +187,50 @@ export class F122TelemetryStack extends cdk.Stack {
         {
           id: "AwsSolutions-EC29",
           reason: "Single short-lived instance",
+        },
+      ],
+      true
+    )
+
+    // userData script - create assets, then download and run
+    const userDataAssets = new Asset(this, "UserDataAssets", {
+      path: path.join(__dirname, "..", "assets"),
+    })
+    userDataAssets.grantRead(instanceRole)
+    telemetryInstance.userData.addS3DownloadCommand({
+      bucket: userDataAssets.bucket,
+      bucketKey: userDataAssets.s3ObjectKey,
+      localFile: "/tmp/assets.zip",
+    })
+    // telemetry and supporting code
+    const f1TelemetryAssets = new Asset(this, "F1TelemetryAssets", {
+      path: path.join(__dirname, "..", "..", "f1telem"),
+    })
+    f1TelemetryAssets.grantRead(instanceRole)
+    telemetryInstance.userData.addS3DownloadCommand({
+      bucket: f1TelemetryAssets.bucket,
+      bucketKey: f1TelemetryAssets.s3ObjectKey,
+      localFile: "/tmp/f1telem.zip",
+    })
+    telemetryInstance.userData.addCommands(
+      "set -xe",
+      "cd /tmp",
+      "unzip assets.zip",
+      "unzip f1telem.zip -d f1telem",
+      "cp init-instance /usr/share/init-instance",
+      "chmod +x /usr/share/init-instance",
+      "/usr/share/init-instance",
+      "cp edge-software-deploy /home/ec2-user/edge-software-deploy",
+      "chmod +x /home/ec2-user/edge-software-deploy",
+      "sudo -H -u ec2-user /home/ec2-user/edge-software-deploy"
+    )
+
+    NagSuppressions.addResourceSuppressions(
+      instanceRole,
+      [
+        {
+          id: "AwsSolutions-IAM5",
+          reason: "Limit asset bucket to read only, used to download assets",
         },
       ],
       true

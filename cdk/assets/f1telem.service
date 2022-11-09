@@ -1,0 +1,36 @@
+# Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
+# this file except in compliance with the License. A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed on an "AS IS" 
+# BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+# License for the specific language governing permissions and limitations under the License.
+#
+[Unit]
+Description=Formula 1 2022 telemetry listener and CAN export
+ConditionPathExists=/home/ec2-user/f1telem
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/f1telem
+ExecStart=/home/ec2-user/f1telem/f1telem
+
+Restart=on-failure
+RestartSec=10
+
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/f1telem
+ExecStartPre=/bin/chown root:ec2-user /var/log/f1telem
+ExecStartPre=/bin/chmod 755 /var/log/f1telem
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=f1telem
+
+[Install]
+WantedBy=multi-user.target
