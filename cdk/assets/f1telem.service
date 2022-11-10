@@ -28,8 +28,6 @@ PermissionsStartOnly=true
 ExecStartPre=/bin/mkdir -p /var/log/f1telem
 ExecStartPre=/bin/chown root:ec2-user /var/log/f1telem
 ExecStartPre=/bin/chmod 755 /var/log/f1telem
-StandardOutput=syslog
-StandardError=syslog
 SyslogIdentifier=f1telem
 
 [Install]

@@ -2,51 +2,66 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/gadams999/f1telem/packet"
 )
 
 func main() {
-	PORT := ":22222"
+	log.Print("Starting f1telem service")
 
-	s, err := net.ResolveUDPAddr("udp4", PORT)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	// Setup run as service
+	gracefulShutdown := make(chan os.Signal, 1)
+	signal.Notify(gracefulShutdown, syscall.SIGINT, syscall.SIGTERM)
 
-	connection, err := net.ListenUDP("udp4", s)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	go func() {
+		PORT := ":22222"
 
-	defer connection.Close()
-	buffer := make([]byte, 2048)
-
-	for {
-		// Read  UDP packet into buffer
-		n, addr, err := connection.ReadFromUDP(buffer)
+		s, err := net.ResolveUDPAddr("udp4", PORT)
 		if err != nil {
-			fmt.Print("read udp failed", n, addr, err)
-			continue
+			fmt.Println(err)
+			return
 		}
 
-		// If event type is 6 (telemetry) process
-		eventType := packet.EventType(buffer)
-		if eventType == 6 {
-			telemetryData, err := packet.TelemetryPacket(buffer)
+		connection, err := net.ListenUDP("udp4", s)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		defer connection.Close()
+		buffer := make([]byte, 2048)
+
+		for {
+			// Read  UDP packet into buffer
+			n, addr, err := connection.ReadFromUDP(buffer)
 			if err != nil {
-				fmt.Print("Error parsing telemetry packet ", err)
+				fmt.Print("read udp failed", n, addr, err)
+				continue
 			}
 
-			// Read the player's car telemetry
-			playerData, err := packet.PlayerData(telemetryData)
-			if err != nil {
-				fmt.Print("Error getting player data ", err)
+			// If event type is 6 (telemetry) process
+			eventType := packet.EventType(buffer)
+			if eventType == 6 {
+				telemetryData, err := packet.TelemetryPacket(buffer)
+				if err != nil {
+					fmt.Print("Error parsing telemetry packet ", err)
+				}
+
+				// Read the player's car telemetry
+				playerData, err := packet.PlayerData(telemetryData)
+				if err != nil {
+					fmt.Print("Error getting player data ", err)
+				}
+				fmt.Printf("%#v\n\n", playerData)
 			}
-			fmt.Printf("%#v\n\n", playerData)
 		}
-	}
+	}()
+
+	<-gracefulShutdown
+	log.Print("Stopping f1telem service")
 }

@@ -155,7 +155,8 @@ export class F122TelemetryStack extends cdk.Stack {
       },
       instanceType: ec2.InstanceType.of(
         ec2.InstanceClass.T4G,
-        ec2.InstanceSize.SMALL
+        // TODO - set to SMALL when done developing
+        ec2.InstanceSize.MEDIUM
       ),
       // CDK error resolving from latestAmazonLinux, using SSM specific: https://github.com/aws/aws-cdk/issues/21011
       machineImage: ec2.MachineImage.fromSsmParameter(
