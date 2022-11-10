@@ -106,10 +106,16 @@ export class F122TelemetryStack extends cdk.Stack {
       vpc,
       allowAllOutbound: true,
     })
+    // TODO - remove SSH access once development is done
     instanceSG.addIngressRule(
       ec2.Peer.anyIpv4(),
       ec2.Port.tcp(22),
       "Allow SSH access from anywhere"
+    )
+    instanceSG.addIngressRule(
+      ec2.Peer.anyIpv4(),
+      ec2.Port.udp(22222),
+      "Allow UDP for telemetry listener from anywhere"
     )
     NagSuppressions.addResourceSuppressions(
       instanceSG,
