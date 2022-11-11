@@ -16,6 +16,7 @@ import * as ec2 from "aws-cdk-lib/aws-ec2"
 import * as s3 from "aws-cdk-lib/aws-s3"
 import * as iam from "aws-cdk-lib/aws-iam"
 import * as cdk from "aws-cdk-lib"
+import { Fn } from "aws-cdk-lib"
 import { NagSuppressions } from "cdk-nag"
 import { Construct } from "constructs"
 import {
@@ -91,7 +92,7 @@ export class F122TelemetryStack extends cdk.Stack {
     })
 
     // Create flow logs to S3
-    new ec2.FlowLog(this, "SharedVpcFlowLogs", {
+    const vpcFlowLogs = new ec2.FlowLog(this, "SharedVpcFlowLogs", {
       destination: ec2.FlowLogDestination.toS3(
         logFileBucket,
         "sharedVpcFlowLogs/"
@@ -99,8 +100,7 @@ export class F122TelemetryStack extends cdk.Stack {
       trafficType: ec2.FlowLogTrafficType.ALL,
       flowLogName: "sharedVpcFlowLogs",
       resourceType: ec2.FlowLogResourceType.fromVpc(vpc),
-    })
-
+    }).node.addDependency(vpcFlowLogRole)
     // Create security group for instance
     const instanceSG = new ec2.SecurityGroup(this, "InstanceSG", {
       vpc,
@@ -166,7 +166,7 @@ export class F122TelemetryStack extends cdk.Stack {
       ),
       // CDK error resolving from latestAmazonLinux, using SSM specific: https://github.com/aws/aws-cdk/issues/21011
       machineImage: ec2.MachineImage.fromSsmParameter(
-        "/aws/service/ami-amazon-linux-latest/al2022-ami-kernel-default-arm64"
+        "/aws/service/canonical/ubuntu/server/22.04/stable/current/arm64/hvm/ebs-gp2/ami-id"
       ),
       // machineImage: ec2.MachineImage.latestAmazonLinux({
       //   generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2022,
@@ -204,34 +204,42 @@ export class F122TelemetryStack extends cdk.Stack {
       path: path.join(__dirname, "..", "assets"),
     })
     userDataAssets.grantRead(instanceRole)
-    telemetryInstance.userData.addS3DownloadCommand({
-      bucket: userDataAssets.bucket,
-      bucketKey: userDataAssets.s3ObjectKey,
-      localFile: "/tmp/assets.zip",
-    })
+
     // telemetry and supporting code
     const f1TelemetryAssets = new Asset(this, "F1TelemetryAssets", {
       path: path.join(__dirname, "..", "..", "f1telem"),
     })
     f1TelemetryAssets.grantRead(instanceRole)
+
+    telemetryInstance.userData.addCommands(
+      "set -xe",
+      `export STACK_NAME="${Fn.ref("AWS::StackName")}"`,
+      `export REGION="${Fn.ref("AWS::Region")}"`,
+      "export INSTANCE_NAME=TelemetryInstance",
+      "apt update && DEBIAN_FRONTEND=noninteractive apt -y upgrade",
+      "DEBIAN_FRONTEND=noninteractive apt install -y awscli zip unzip"
+    )
+    telemetryInstance.userData.addS3DownloadCommand({
+      bucket: userDataAssets.bucket,
+      bucketKey: userDataAssets.s3ObjectKey,
+      localFile: "/tmp/assets.zip",
+    })
     telemetryInstance.userData.addS3DownloadCommand({
       bucket: f1TelemetryAssets.bucket,
       bucketKey: f1TelemetryAssets.s3ObjectKey,
       localFile: "/tmp/f1telem.zip",
     })
     telemetryInstance.userData.addCommands(
-      "set -xe",
       "cd /tmp",
       "unzip assets.zip",
       "unzip f1telem.zip -d f1telem",
       "cp init-instance /usr/share/init-instance",
       "chmod +x /usr/share/init-instance",
       "/usr/share/init-instance",
-      "cp edge-software-deploy /home/ec2-user/edge-software-deploy",
-      "chmod +x /home/ec2-user/edge-software-deploy",
-      "sudo -H -u ec2-user /home/ec2-user/edge-software-deploy"
+      "cp edge-software-deploy /home/ubuntu/edge-software-deploy",
+      "chmod +x /home/ubuntu/edge-software-deploy",
+      "sudo -H -u ubuntu /home/ubuntu/edge-software-deploy"
     )
-
     NagSuppressions.addResourceSuppressions(
       instanceRole,
       [

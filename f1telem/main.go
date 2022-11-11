@@ -57,11 +57,24 @@ func main() {
 				if err != nil {
 					fmt.Print("Error getting player data ", err)
 				}
-				fmt.Printf("%#v\n\n", playerData)
+				SendToCan(playerData)
 			}
 		}
 	}()
 
 	<-gracefulShutdown
 	log.Print("Stopping f1telem service")
+}
+
+func SendToCan(telem packet.PlayerTelemetryData) {
+	var speed_obd2 uint8
+	var speed_custom uint16
+
+	if telem.CarTelemetryData.M_speed <= 255 {
+		speed_obd2 = uint8(telem.CarTelemetryData.M_speed)
+	} else {
+		speed_obd2 = 255
+	}
+	speed_custom = telem.CarTelemetryData.M_speed
+	fmt.Printf("speed (obd2 - custom), %d - %d\n", speed_obd2, speed_custom)
 }

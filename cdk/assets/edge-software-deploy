@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations under the License.
 #
 
-# This runs as an ec2-user
+# This runs as ubuntu
 
 # Go $HOME
 cd ~

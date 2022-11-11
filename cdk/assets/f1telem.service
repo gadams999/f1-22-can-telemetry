@@ -11,22 +11,22 @@
 #
 [Unit]
 Description=Formula 1 2022 telemetry listener and CAN export
-ConditionPathExists=/home/ec2-user/f1telem
+ConditionPathExists=/home/ubuntu/f1telem
 After=network.target
 
 [Service]
 Type=simple
-User=ec2-user
-Group=ec2-user
-WorkingDirectory=/home/ec2-user/f1telem
-ExecStart=/home/ec2-user/f1telem/f1telem
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/f1telem
+ExecStart=/home/ubuntu/f1telem/f1telem
 
 Restart=on-failure
 RestartSec=10
 
 PermissionsStartOnly=true
 ExecStartPre=/bin/mkdir -p /var/log/f1telem
-ExecStartPre=/bin/chown root:ec2-user /var/log/f1telem
+ExecStartPre=/bin/chown root:ubuntu /var/log/f1telem
 ExecStartPre=/bin/chmod 755 /var/log/f1telem
 SyslogIdentifier=f1telem
 

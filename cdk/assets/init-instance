@@ -15,10 +15,17 @@
 # if the script fails at any point - signal (which will fast-fail the cloudformation deployment)
 function signal-fail {
     echo "Failed"
-    /opt/aws/bin/cfn-signal --success=false --resource=$AUTO_SCALING_GROUP --stack=$STACK_NAME --region=$REGION
+    /opt/aws/bin/cfn-signal --success=false --resource=$INSTANCE_NAME --stack=$STACK_NAME --region=$REGION
 }
 trap 'signal-fail' ERR
 
-# yum may still be running, sleep a bit before calling it
-yum upgrade
-yum install -y golang
+# apt may still be running, sleep a bit before calling it
+sleep 10
+DEBIAN_FRONTEND=noninteractive apt-get install -y linux-modules-extra-$(uname -r)
+DEBIAN_FRONTEND=noninteractive apt install -y golang-go
+
+ip link add dev vcan0 type vcan
+ip link set up vcan0
+#DEBIAN_FRONTEND=noninteractive apt install -y grub-efi-amd64-bin golang-go zip unzip
+
+

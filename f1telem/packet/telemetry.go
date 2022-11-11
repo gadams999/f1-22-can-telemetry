@@ -45,7 +45,7 @@ type pktTelemetryData struct {
 }
 
 // This is just the players data minus the header and other cars
-type playerTelemetryData struct {
+type PlayerTelemetryData struct {
 	CarTelemetryData carTelemetryData
 }
 
@@ -60,19 +60,19 @@ func TelemetryPacket(pkt []byte) (pktTelemetryData, error) {
 	}
 	if telemetryData.PacketHeader.M_packetId != 6 {
 		fmt.Print("Not a telemetry packet")
-		return telemetryData, errors.New("Not a telemetry packet")
+		return telemetryData, errors.New("not a telemetry packet")
 	} else {
 		return telemetryData, nil
 	}
 }
 
-func PlayerData(fullTelem pktTelemetryData) (playerTelemetryData, error) {
+func PlayerData(fullTelem pktTelemetryData) (PlayerTelemetryData, error) {
 	var playerIndex int8
-	var playerTelem playerTelemetryData
+	var playerTelem PlayerTelemetryData
 
 	if fullTelem.PacketHeader.M_packetId != 6 {
 		fmt.Print("Not a telemetry packet")
-		return playerTelem, errors.New("Not a telemetry packet")
+		return playerTelem, errors.New("not a telemetry packet")
 	} else {
 		// Get player's index then copy the data
 		playerIndex = int8(fullTelem.PacketHeader.M_playerCarIndex)
