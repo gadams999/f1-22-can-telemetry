@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"encoding/binary"
 	"log"
 	"net"
 	"os"
@@ -78,21 +78,58 @@ func main() {
 func SendToCan(telem packet.PlayerTelemetryData, conn net.Conn) {
 	var speed_obd2 uint8
 	var speed_custom uint16
+	var rpm_obd2 uint16
+	var throttle_obd2 uint8
 	var frame can.Frame
+	tx := socketcan.NewTransmitter(conn)
 
+	// Write the vehicle speed to CAN
 	if telem.CarTelemetryData.M_speed <= 255 {
 		speed_obd2 = uint8(telem.CarTelemetryData.M_speed)
 	} else {
 		speed_obd2 = 255
 	}
 	speed_custom = telem.CarTelemetryData.M_speed
-	fmt.Printf("speed (obd2 - custom), %d - %d\n", speed_obd2, speed_custom)
-
+	// OBD2
 	frame.ID = 0xd
 	frame.Length = 1
-	frame.Data.SetUnsignedBitsLittleEndian(0, 1, uint64(speed_obd2))
-
-	tx := socketcan.NewTransmitter(conn)
+	CanFrameUnsignedBigEndian(&frame, uint64(speed_obd2))
+	_ = tx.TransmitFrame(context.Background(), frame)
+	// Custom (PID 0xd0)
+	frame.ID = 0xd0
+	frame.Length = 2
+	CanFrameUnsignedBigEndian(&frame, uint64(speed_custom))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
+	// Write the RPM value to CAN
+	// OBD2 rpm = (A*256 + B)/4
+	rpm_obd2 = telem.CarTelemetryData.M_engineRPM * 4
+	frame.ID = 0xc
+	frame.Length = 2
+	CanFrameUnsignedBigEndian(&frame, uint64(rpm_obd2))
+	_ = tx.TransmitFrame(context.Background(), frame)
+
+	// Write Throttle position to CAN
+	// OBD2 throttle = (100/255)*A
+	throttle_obd2 = uint8(telem.CarTelemetryData.M_throttle * 255)
+	frame.ID = 0x11
+	frame.Length = 1
+	CanFrameUnsignedBigEndian(&frame, uint64(throttle_obd2))
+	_ = tx.TransmitFrame(context.Background(), frame)
+}
+
+// Copy the Unsigned value to the CAN frame in big endian format
+func CanFrameUnsignedBigEndian(frame *can.Frame, value uint64) {
+	buf := make([]byte, frame.Length)
+	switch frame.Length {
+	case 1:
+		buf[0] = uint8(value)
+	case 2:
+		binary.BigEndian.PutUint16(buf, uint16(value))
+	case 4:
+		binary.BigEndian.PutUint32(buf, uint32(value))
+	case 8:
+		binary.BigEndian.PutUint64(buf, uint64(value))
+	}
+	copy(frame.Data[:frame.Length], buf)
 }
