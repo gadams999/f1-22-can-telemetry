@@ -116,6 +116,14 @@ func SendToCan(telem packet.PlayerTelemetryData, conn net.Conn) {
 	frame.Length = 1
 	CanFrameUnsignedBigEndian(&frame, uint64(throttle_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
+
+	// Write engine coolant temperature to CAN
+	// OBD2 coolant = A - 40
+	throttle_obd2 = uint8(telem.CarTelemetryData.M_engineTemperature + 40)
+	frame.ID = 0x5
+	frame.Length = 1
+	CanFrameUnsignedBigEndian(&frame, uint64(throttle_obd2))
+	_ = tx.TransmitFrame(context.Background(), frame)
 }
 
 // Copy the Unsigned value to the CAN frame in big endian format
