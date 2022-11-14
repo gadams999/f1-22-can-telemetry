@@ -11,11 +11,6 @@ type pktEventData struct {
 	M_eventDetails    [36]byte
 }
 
-func ParsePacket() bool {
-	fmt.Print("got here")
-	return true
-}
-
 func EventType(pkt []byte) int {
 	var header pktHeader
 	wrappedReader := bytes.NewReader(pkt[:24])
