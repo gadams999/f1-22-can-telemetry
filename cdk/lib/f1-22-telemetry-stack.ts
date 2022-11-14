@@ -19,13 +19,10 @@ import * as cdk from "aws-cdk-lib"
 import { Fn } from "aws-cdk-lib"
 import { NagSuppressions } from "cdk-nag"
 import { Construct } from "constructs"
-import {
-  AmazonLinuxGeneration,
-  InstanceSize,
-  InstanceType,
-  SecurityGroup,
-} from "aws-cdk-lib/aws-ec2"
+import { IotThingCertPolicy } from "../../cdk-constructs/IotThingCertPolicy"
 import { Asset } from "aws-cdk-lib/aws-s3-assets"
+// import { constants } from "os"
+import * as constants from "./constants"
 
 export class F122TelemetryStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -40,7 +37,39 @@ export class F122TelemetryStack extends cdk.Stack {
     ])
 
     const stackName = cdk.Stack.of(this).stackName
+    if (stackName.length > 20) {
+      console.error("Stack name must be less than 20 characters in length")
+      process.exitCode = 1
+    }
     const stackRandom: string = makeid(8, stackName)
+
+    // Create AWS IoT thing/cert/policy
+    const fleetwiseCoreThingName = fullResourceName({
+      stackName: stackName,
+      baseName: "f1-car-core",
+      suffix: stackRandom,
+      resourceRegex: "a-zA-Z0-9:_-",
+      maxLength: 128,
+    })
+    const fleetwiseCoreIotPolicyName = fullResourceName({
+      stackName: stackName,
+      baseName: "f1-car-minimal-policy",
+      suffix: stackRandom,
+      resourceRegex: "\\w+=,.@-",
+      maxLength: 128,
+    })
+    // Then create IoT thing, certificate/private key, and IoT Policy
+    const iotThingCertPol = new IotThingCertPolicy(this, "GreengrassCore", {
+      thingName: fleetwiseCoreThingName,
+      iotPolicyName: fleetwiseCoreIotPolicyName,
+      iotPolicy: constants.fleetwiseMinimalIoTPolicy,
+      encryptionAlgorithm: "RSA",
+      policyParameterMapping: {
+        region: cdk.Fn.ref("AWS::Region"),
+        account: cdk.Fn.ref("AWS::AccountId"),
+        // rolealiasname: greengrassRoleAlias.roleAliasName,
+      },
+    })
 
     const logFileBucket = new s3.Bucket(this, "LogFileBucket", {
       bucketName: `${stackName}-logfiles-${cdk.Fn.ref(
@@ -182,7 +211,7 @@ export class F122TelemetryStack extends cdk.Stack {
       role: instanceRole,
       securityGroup: instanceSG,
       // TODO - remove once dev is done
-      keyName: "gadams-us-west-2",
+      keyName: "gadams-us-east-1",
     })
     NagSuppressions.addResourceSuppressions(
       telemetryInstance,
@@ -264,6 +293,28 @@ export class F122TelemetryStack extends cdk.Stack {
         )
       }
       return result
+    }
+
+    interface ResourceName {
+      stackName: string
+      baseName: string
+      suffix: string
+      resourceRegex: string
+      maxLength: number
+    }
+
+    function fullResourceName({
+      stackName,
+      baseName,
+      suffix,
+      resourceRegex,
+      maxLength,
+    }: ResourceName) {
+      let re = new RegExp(`[^\\[${resourceRegex}]`, "g")
+      let resourceName = `${stackName}-${baseName}`.replace(re, "")
+      resourceName = resourceName.substring(0, maxLength - suffix.length - 1)
+      resourceName = `${resourceName}-${suffix}`
+      return resourceName
     }
   }
 }

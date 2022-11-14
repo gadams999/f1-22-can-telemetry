@@ -13,3 +13,32 @@
 
 export const STACK_NAME =
   "f1-22-telemetry" || process.env.STACK_NAME || "%%STACK_NAME%%"
+
+// Greengrass core minimal policy template
+// NOTE: Additional permissions may be needed for components
+export const fleetwiseMinimalIoTPolicy = `{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Connect"],
+      "Resource": "arn:aws:iot:<%= region %>:<%= account %>:client/<%= thingname %>*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Receive", "iot:Publish"],
+      "Resource": [
+        "arn:aws:iot:<%= region %>:<%= account %>:topic/$aws/iotfleetwise/vehicles/<%= thingname %>*/checkins",
+        "arn:aws:iot:<%= region %>:<%= account %>:topic/$aws/iotfleetwise/vehicles/<%= thingname %>*/signals"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Subscribe"],
+      "Resource": [
+        "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/collection_schemes",
+        "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/decode_manifests"
+      ]
+    }
+  ]
+}`
