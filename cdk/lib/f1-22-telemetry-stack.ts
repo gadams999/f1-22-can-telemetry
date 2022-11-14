@@ -15,13 +15,13 @@ import * as path from "path"
 import * as ec2 from "aws-cdk-lib/aws-ec2"
 import * as s3 from "aws-cdk-lib/aws-s3"
 import * as iam from "aws-cdk-lib/aws-iam"
+import * as timestream from "aws-cdk-lib/aws-timestream"
 import * as cdk from "aws-cdk-lib"
 import { Fn } from "aws-cdk-lib"
 import { NagSuppressions } from "cdk-nag"
 import { Construct } from "constructs"
 import { IotThingCertPolicy } from "../../cdk-constructs/IotThingCertPolicy"
 import { Asset } from "aws-cdk-lib/aws-s3-assets"
-// import { constants } from "os"
 import * as constants from "./constants"
 
 export class F122TelemetryStack extends cdk.Stack {
@@ -59,7 +59,7 @@ export class F122TelemetryStack extends cdk.Stack {
       maxLength: 128,
     })
     // Then create IoT thing, certificate/private key, and IoT Policy
-    const iotThingCertPol = new IotThingCertPolicy(this, "GreengrassCore", {
+    const iotThingCertPol = new IotThingCertPolicy(this, "FleetwiseTestCore", {
       thingName: fleetwiseCoreThingName,
       iotPolicyName: fleetwiseCoreIotPolicyName,
       iotPolicy: constants.fleetwiseMinimalIoTPolicy,
@@ -67,7 +67,6 @@ export class F122TelemetryStack extends cdk.Stack {
       policyParameterMapping: {
         region: cdk.Fn.ref("AWS::Region"),
         account: cdk.Fn.ref("AWS::AccountId"),
-        // rolealiasname: greengrassRoleAlias.roleAliasName,
       },
     })
 
@@ -279,6 +278,19 @@ export class F122TelemetryStack extends cdk.Stack {
       ],
       true
     )
+
+    // Create timestream DB
+    const tsDatabase = new timestream.CfnDatabase(this, "TsDatabase", {
+      databaseName: `f1-telemetry-${stackRandom}`,
+    })
+    const tsHeartBeatTable = new timestream.CfnTable(this, "HeartbeatTable", {
+      databaseName: tsDatabase.ref,
+      tableName: "fleetwise",
+      retentionProperties: {
+        MemoryStoreRetentionPeriodInHours: "24",
+        MagneticStoreRetentionPeriodInDays: "2",
+      },
+    })
 
     function makeid(length: number, seed: string) {
       // Generate a n-length random value for each resource
