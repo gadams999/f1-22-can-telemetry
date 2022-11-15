@@ -16,7 +16,7 @@ export const STACK_NAME =
 
 // Greengrass core minimal policy template
 // NOTE: Additional permissions may be needed for components
-export const fleetwiseMinimalIoTPolicy = `{
+export const fleetWiseMinimalIoTPolicy = `{
   "Version": "2012-10-17",
   "Statement": [
     {

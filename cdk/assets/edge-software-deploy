@@ -17,6 +17,9 @@
 # Go $HOME
 cd ~
 
+# Print out our enviromnent for debugging
+env > env.tmp
+
 # Build executable
 unzip /tmp/f1telem.zip -d ~/f1telem
 cd ~/f1telem
@@ -26,3 +29,7 @@ sudo chmod 755 /etc/systemd/system/f1telem.service
 sudo systemctl enable f1telem.service
 sudo systemctl start f1telem.service
 # modify code for syslog - https://fabianlee.org/2017/05/21/golang-running-a-go-binary-as-a-systemd-service-on-ubuntu-16-04/
+
+# Next prepare FleetWise agent for operation
+# aws --region=$REGION ssm get-parameter --name $SSM_KEY --output text --query Parameter.Value > /home/ubuntu/cert.pem
+# aws --region=$REGION ssm get-parameter --name $SSM_CERT --with-decryption --output text --query Parameter.Value > /home/ubuntu/private.key

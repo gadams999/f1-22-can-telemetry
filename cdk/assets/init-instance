@@ -13,11 +13,11 @@
 #
 
 # if the script fails at any point - signal (which will fast-fail the cloudformation deployment)
-function signal-fail {
-    echo "Failed"
-    /opt/aws/bin/cfn-signal --success=false --resource=$INSTANCE_NAME --stack=$STACK_NAME --region=$REGION
-}
-trap 'signal-fail' ERR
+# function signal-fail {
+#     echo "Failed"
+#     /opt/aws/bin/cfn-signal --success=false --resource=$INSTANCE_NAME --stack=$STACK_NAME --region=$REGION
+# }
+# trap 'signal-fail' ERR
 
 # apt may still be running, sleep a bit before calling it
 sleep 10

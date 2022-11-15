@@ -44,14 +44,14 @@ export class F122TelemetryStack extends cdk.Stack {
     const stackRandom: string = makeid(8, stackName)
 
     // Create AWS IoT thing/cert/policy
-    const fleetwiseCoreThingName = fullResourceName({
+    const fleetWiseCoreThingName = fullResourceName({
       stackName: stackName,
       baseName: "f1-car-core",
       suffix: stackRandom,
       resourceRegex: "a-zA-Z0-9:_-",
       maxLength: 128,
     })
-    const fleetwiseCoreIotPolicyName = fullResourceName({
+    const fleetWiseCoreIotPolicyName = fullResourceName({
       stackName: stackName,
       baseName: "f1-car-minimal-policy",
       suffix: stackRandom,
@@ -59,14 +59,27 @@ export class F122TelemetryStack extends cdk.Stack {
       maxLength: 128,
     })
     // Then create IoT thing, certificate/private key, and IoT Policy
-    const iotThingCertPol = new IotThingCertPolicy(this, "FleetwiseTestCore", {
-      thingName: fleetwiseCoreThingName,
-      iotPolicyName: fleetwiseCoreIotPolicyName,
-      iotPolicy: constants.fleetwiseMinimalIoTPolicy,
+    const iotThingCertPol = new IotThingCertPolicy(this, "FleetWiseTestCore", {
+      thingName: fleetWiseCoreThingName,
+      iotPolicyName: fleetWiseCoreIotPolicyName,
+      iotPolicy: constants.fleetWiseMinimalIoTPolicy,
       encryptionAlgorithm: "RSA",
       policyParameterMapping: {
         region: cdk.Fn.ref("AWS::Region"),
         account: cdk.Fn.ref("AWS::AccountId"),
+      },
+    })
+
+    // Create timestream DB for use by FleetWise
+    const tsDatabase = new timestream.CfnDatabase(this, "TsDatabase", {
+      databaseName: `f1-telemetry-${stackRandom}`,
+    })
+    const tsHeartBeatTable = new timestream.CfnTable(this, "HeartbeatTable", {
+      databaseName: tsDatabase.ref,
+      tableName: "fleetwise",
+      retentionProperties: {
+        MemoryStoreRetentionPeriodInHours: "24",
+        MagneticStoreRetentionPeriodInDays: "2",
       },
     })
 
@@ -166,6 +179,23 @@ export class F122TelemetryStack extends cdk.Stack {
         ),
       ],
     })
+    instanceRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ["ssm:DescribeParameters"],
+        resources: ["*"],
+      })
+    )
+    instanceRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ["ssm:GetParameters"],
+        resources: [
+          `arn:aws:ssm:${cdk.Fn.ref("AWS::Region")}:${cdk.Fn.ref(
+            "AWS::AccountId"
+          )}:parameter/${stackName}/${fleetWiseCoreThingName}/*`,
+        ],
+      })
+    )
+
     NagSuppressions.addResourceSuppressions(
       instanceRole,
       [
@@ -244,6 +274,9 @@ export class F122TelemetryStack extends cdk.Stack {
       `export STACK_NAME="${Fn.ref("AWS::StackName")}"`,
       `export REGION="${Fn.ref("AWS::Region")}"`,
       "export INSTANCE_NAME=TelemetryInstance",
+      `export SSM_CERT="${iotThingCertPol.certificatePemParameter}"`,
+      `export SSM_KEY="${iotThingCertPol.privateKeySecretParameter}"`,
+      `export SSM_IOT_ENDPOINT="${iotThingCertPol.dataAtsEndpointAddress}"`,
       "apt update && DEBIAN_FRONTEND=noninteractive apt -y upgrade",
       "DEBIAN_FRONTEND=noninteractive apt install -y awscli zip unzip"
     )
@@ -260,13 +293,13 @@ export class F122TelemetryStack extends cdk.Stack {
     telemetryInstance.userData.addCommands(
       "cd /tmp",
       "unzip assets.zip",
-      "unzip f1telem.zip -d f1telem",
+      // "unzip f1telem.zip -d f1telem",
       "cp init-instance /usr/share/init-instance",
       "chmod +x /usr/share/init-instance",
       "/usr/share/init-instance",
       "cp edge-software-deploy /home/ubuntu/edge-software-deploy",
       "chmod +x /home/ubuntu/edge-software-deploy",
-      "sudo -H -u ubuntu /home/ubuntu/edge-software-deploy"
+      "sudo -H -u ubuntu REGION=$REGION SSM_CERT=$SSM_CERT SSM_KEY=$SSM_KEY SSM_IOT_ENDPOINT=$SSM_IOT_ENDPOINT /home/ubuntu/edge-software-deploy"
     )
     NagSuppressions.addResourceSuppressions(
       instanceRole,
@@ -278,19 +311,6 @@ export class F122TelemetryStack extends cdk.Stack {
       ],
       true
     )
-
-    // Create timestream DB
-    const tsDatabase = new timestream.CfnDatabase(this, "TsDatabase", {
-      databaseName: `f1-telemetry-${stackRandom}`,
-    })
-    const tsHeartBeatTable = new timestream.CfnTable(this, "HeartbeatTable", {
-      databaseName: tsDatabase.ref,
-      tableName: "fleetwise",
-      retentionProperties: {
-        MemoryStoreRetentionPeriodInHours: "24",
-        MagneticStoreRetentionPeriodInDays: "2",
-      },
-    })
 
     function makeid(length: number, seed: string) {
       // Generate a n-length random value for each resource
