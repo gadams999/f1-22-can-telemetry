@@ -31,5 +31,9 @@ sudo systemctl start f1telem.service
 # modify code for syslog - https://fabianlee.org/2017/05/21/golang-running-a-go-binary-as-a-systemd-service-on-ubuntu-16-04/
 
 # Next prepare FleetWise agent for operation
-# aws --region=$REGION ssm get-parameter --name $SSM_KEY --output text --query Parameter.Value > /home/ubuntu/cert.pem
-# aws --region=$REGION ssm get-parameter --name $SSM_CERT --with-decryption --output text --query Parameter.Value > /home/ubuntu/private.key
+aws --region=$REGION ssm get-parameter --name $SSM_CERT --output text --query Parameter.Value > /home/ubuntu/cert.pem
+aws --region=$REGION ssm get-parameter --name $SSM_KEY --with-decryption --output text --query Parameter.Value > /home/ubuntu/private.key
+git clone https://github.com/aws/aws-iot-fleetwise-edge.git
+cd aws-iot-fleetwise
+cd ~/aws-iot-fleetwise-edge/tools/cloud
+pip3 install wrapt==1.10.0 plotly==5.3.1 pandas==1.3.4 cantools==36.4.0

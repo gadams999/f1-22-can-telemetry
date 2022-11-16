@@ -22,7 +22,7 @@
 # apt may still be running, sleep a bit before calling it
 sleep 10
 DEBIAN_FRONTEND=noninteractive apt-get install -y linux-modules-extra-$(uname -r)
-DEBIAN_FRONTEND=noninteractive apt install -y golang-go
+DEBIAN_FRONTEND=noninteractive apt install -y golang-go python3-pip cmake
 
 ip link add dev vcan0 type vcan
 ip link set up vcan0
