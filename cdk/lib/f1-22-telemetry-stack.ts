@@ -220,7 +220,7 @@ export class F122TelemetryStack extends cdk.Stack {
       instanceType: ec2.InstanceType.of(
         ec2.InstanceClass.T4G,
         // TODO - set to SMALL when done developing
-        ec2.InstanceSize.XLARGE
+        ec2.InstanceSize.MEDIUM
       ),
       // CDK error resolving from latestAmazonLinux, using SSM specific: https://github.com/aws/aws-cdk/issues/21011
       machineImage: ec2.MachineImage.fromSsmParameter(
@@ -299,7 +299,7 @@ export class F122TelemetryStack extends cdk.Stack {
       "/usr/share/init-instance",
       "cp edge-software-deploy /home/ubuntu/edge-software-deploy",
       "chmod +x /home/ubuntu/edge-software-deploy",
-      "sudo -H -u ubuntu REGION=$REGION SSM_CERT=$SSM_CERT SSM_KEY=$SSM_KEY SSM_IOT_ENDPOINT=$SSM_IOT_ENDPOINT /home/ubuntu/edge-software-deploy"
+      "sudo -H -u ubuntu REGION=$REGION SSM_CERT=$SSM_CERT SSM_KEY=$SSM_KEY IOT_ENDPOINT=$IOT_ENDPOINT /home/ubuntu/edge-software-deploy"
     )
     NagSuppressions.addResourceSuppressions(
       instanceRole,
