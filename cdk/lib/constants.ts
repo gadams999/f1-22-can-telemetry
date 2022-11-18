@@ -37,7 +37,7 @@ export const fleetWiseMinimalIoTPolicy = `{
       "Action": ["iot:Subscribe"],
       "Resource": [
         "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/collection_schemes",
-        "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/decode_manifests"
+        "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/decoder_manifests"
       ]
     }
   ]

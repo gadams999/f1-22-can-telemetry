@@ -34,49 +34,29 @@
       "canDecoderThreadIdleTimeMs": 50
     },
     "persistency": {
-      "persistencyPath": "./",
+      "persistencyPath": "/path/to/collection-scheme-and-data-persistency",
       "persistencyPartitionMaxSize": 524288,
-      "persistencyUploadRetryInterval": 10000
+      "persistencyUploadRetryIntervalMs": 10000
     },
     "internalParameters": {
       "readyToPublishDataBufferSize": 10000,
-      "systemWideLogLevel": "Trace",
-      "dataReductionProbabilityDisabled": false
+      "systemWideLogLevel": "Error",
+      "dataReductionProbabilityDisabled": false,
+      "useJsonBasedCollection": false
     },
     "publishToCloudParameters": {
       "maxPublishMessageCount": 1000,
-      "collectionSchemeManagementCheckinIntervalMs": 5000
+      "collectionSchemeManagementCheckinIntervalMs": 120000
     },
     "mqttConnection": {
       "endpointUrl": "IOT_ENDPOINT",
       "clientId": "THING_NAME",
-      "collectionSchemeListTopic": "collection-scheme-list-topic",
-      "decoderManifestTopic": "decoder-manifest-topic",
-      "canDataTopic": "can-data",
-      "checkinTopic": "checkin",
+      "collectionSchemeListTopic": "$aws/iotfleetwise/vehicles/THING_NAME/collection_schemes",
+      "decoderManifestTopic": "$aws/iotfleetwise/vehicles/THING_NAME/decoder_manifests",
+      "canDataTopic": "$aws/iotfleetwise/vehicles/THING_NAME/signals",
+      "checkinTopic": "$aws/iotfleetwise/vehicles/THING_NAME/checkins",
       "certificateFilename": "/home/ubuntu/certificate.pem.crt",
       "privateKeyFilename": "/home/ubuntu/private.pem.key"
-    },
-    "iWaveGpsExample": {
-      "nmeaFilePath": "/tmp/engineTestIWaveGPSfile.txt",
-      "canChannel": "IWAVE-GPS-CAN",
-      "canFrameId": "1",
-      "longitudeStartBit": "32",
-      "latitudeStartBit": "0"
     }
-  },
-  "dds-nodes-configuration": [
-    {
-      "dds-domain-id": 0,
-      "upstream-dds-topic-name": "testUpstreamTopic",
-      "downstream-dds-topic-name": "testDownstreamTopic",
-      "dds-topics-qos": "TOPIC_QOS_DEFAULT",
-      "dds-transport-protocol": "SHM",
-      "dds-device-id": 1,
-      "dds-device-type": "CAMERA",
-      "dds-tmp-cache-location": "/tmp/",
-      "dds-reader-name": "FWE-Reader",
-      "dds-writer-name": "FWE-Writer"
-    }
-  ]
+  }
 }

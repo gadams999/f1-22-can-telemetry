@@ -1,10 +1,3 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-
 # Test binary, built with `go test -c`
 *.test
 
@@ -13,3 +6,6 @@
 
 # Dependency directories
 node_modules/
+
+# cdk-constructs build
+cdk-constructs/**/lib

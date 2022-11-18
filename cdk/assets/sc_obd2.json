@@ -1,0 +1,2200 @@
+[
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0C - Engine speed measured as rotations per minute",
+      "fullyQualifiedName": "OBD.EngineSpeed",
+      "unit": "rpm"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 43 - Absolute load value",
+      "fullyQualifiedName": "Vehicle.OBD.AbsoluteLoad",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Throttle Position G",
+      "fullyQualifiedName": "Vehicle.OBD.AbsoluteThrottlePositionG"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 49 - Accelerator pedal position D",
+      "fullyQualifiedName": "Vehicle.OBD.AcceleratorPositionD",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 4A - Accelerator pedal position E",
+      "fullyQualifiedName": "Vehicle.OBD.AcceleratorPositionE",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 4B - Accelerator pedal position F",
+      "fullyQualifiedName": "Vehicle.OBD.AcceleratorPositionF",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.ActualEgrA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.ActualEgrB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Actual engine - percent torque",
+      "fullyQualifiedName": "Vehicle.OBD.ActualEngineTorque"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 46 - Ambient air temperature",
+      "fullyQualifiedName": "Vehicle.OBD.AmbientAirTemperature",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx reagent system",
+      "fullyQualifiedName": "Vehicle.OBD.AvgDemandedReagentConsumption"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx reagent system",
+      "fullyQualifiedName": "Vehicle.OBD.AvgReagentConsumption"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 3C - Catalyst temperature from bank 1, sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.Bank1Sensor1Catalyst",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 3E - Catalyst temperature from bank 1, sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.Bank1Sensor2Catalyst",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 3D - Catalyst temperature from bank 2, sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.Bank2Sensor1Catalyst",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 3F - Catalyst temperature from bank 2, sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.Bank2Sensor2Catalyst",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 33 - Barometric pressure",
+      "fullyQualifiedName": "Vehicle.OBD.BarometricPressure",
+      "unit": "kPa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Boost pressure control",
+      "fullyQualifiedName": "Vehicle.OBD.BoostPressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Boost pressure control",
+      "fullyQualifiedName": "Vehicle.OBD.BoostPressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Boost pressure control",
+      "fullyQualifiedName": "Vehicle.OBD.BoostPressureControlSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Charge air cooler temperature (CACT)",
+      "fullyQualifiedName": "Vehicle.OBD.CACTBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Charge air cooler temperature (CACT)",
+      "fullyQualifiedName": "Vehicle.OBD.CACTBank1Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Charge air cooler temperature (CACT)",
+      "fullyQualifiedName": "Vehicle.OBD.CACTBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Charge air cooler temperature (CACT)",
+      "fullyQualifiedName": "Vehicle.OBD.CACTBank2Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Charge air cooler temperature (CACT)",
+      "fullyQualifiedName": "Vehicle.OBD.CACTSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Boost pressure control",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedBoostPressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Boost pressure control",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedBoostPressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedEgrA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedEgrB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 44 - Commanded equivalence ratio",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedEquivalenceRatio",
+      "unit": "ratio"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedFuelRailPressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedFuelRailPressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Injection pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedInjectionControlPressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Injection pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedInjectionControlPressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded Diesel intake air flow control and relative intake air flow",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedIntakeAirFlowA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded Diesel intake air flow control and relative intake air flow",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedIntakeAirFlowB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded throttle actuator control and relative throttle position",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedThrottleActuatorA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded throttle actuator control and relative throttle position",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedThrottleActuatorB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Variable Geometry turbo (VGT) control",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedVgtAPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Variable Geometry turbo (VGT) control",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedVgtBPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Wastegate control",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedWastegateAPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Wastegate control",
+      "fullyQualifiedName": "Vehicle.OBD.CommandedWastegateBPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 42 - Control module voltage",
+      "fullyQualifiedName": "Vehicle.OBD.ControlModuleVoltage",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 05 - Coolant temperature",
+      "fullyQualifiedName": "Vehicle.OBD.CoolantTemperature",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "WWH-OBD Vehicle OBD Counters support",
+      "fullyQualifiedName": "Vehicle.OBD.CumulativeMICounter"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Cylinder Fuel Rate",
+      "fullyQualifiedName": "Vehicle.OBD.CylinderFuelRate"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Exhaust Fluid Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.DEFConcentration"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Exhaust Fluid Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.DEFSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Exhaust Fluid Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.DEFTankLevel"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Exhaust Fluid Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.DEFTankTemperature"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Driver's demand engine - percent torque",
+      "fullyQualifiedName": "Vehicle.OBD.DemandEngineTorque"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 31 - Distance traveled since codes cleared",
+      "fullyQualifiedName": "Vehicle.OBD.DistanceSinceDTCClear",
+      "unit": "km"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 21 - Distance traveled with MIL on",
+      "fullyQualifiedName": "Vehicle.OBD.DistanceWithMIL",
+      "unit": "km"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.DosingActivityCounter"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 2D - Exhaust gas recirculation (EGR) error",
+      "fullyQualifiedName": "Vehicle.OBD.EGRError",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.EGRSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust gas recirculation temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EGRTempBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust gas recirculation temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EGRTempBank1Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust gas recirculation temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EGRTempBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust gas recirculation temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EGRTempBank2Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust gas recirculation temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EGRTempSupported"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.EGRValveCounter"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 1",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 1",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 1",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 1",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor5"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor6"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor7"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Sensor8"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 1",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1Support"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank1SupportHigherSensors"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 2",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 2",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 2",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 2",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor5"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor6"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor7"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Sensor8"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas temperature (EGT) Bank 2",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2Support"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust Gas Temperature Sensor",
+      "fullyQualifiedName": "Vehicle.OBD.EGTBank2SupportHigherSensors"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 32 - Evaporative purge (EVAP) system pressure",
+      "fullyQualifiedName": "Vehicle.OBD.EVAPVaporPressure",
+      "unit": "Pa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine coolant temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EngineCoolantTemperature"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine coolant temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EngineCoolantTemperature1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine coolant temperature",
+      "fullyQualifiedName": "Vehicle.OBD.EngineCoolantTemperature2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine Exhaust Flow Rate",
+      "fullyQualifiedName": "Vehicle.OBD.EngineExhaustFlowRate"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine Friction - Percent Torque",
+      "fullyQualifiedName": "Vehicle.OBD.EngineFriction"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine Fuel Rate",
+      "fullyQualifiedName": "Vehicle.OBD.EngineFuelRate"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine idle time",
+      "fullyQualifiedName": "Vehicle.OBD.EngineIdleTime"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 04 - Engine load in percent - 0 = no load, 100 = full load",
+      "fullyQualifiedName": "Vehicle.OBD.EngineLoad",
+      "max": 100.0,
+      "min": 0.0,
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine run time",
+      "fullyQualifiedName": "Vehicle.OBD.EngineRunTime"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine run time",
+      "fullyQualifiedName": "Vehicle.OBD.EngineRunTimePTOActive"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine run time",
+      "fullyQualifiedName": "Vehicle.OBD.EngineRunTimeSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx reagent system",
+      "fullyQualifiedName": "Vehicle.OBD.EngineRuneTimeWithNOxWarning"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0C - Engine speed measured as rotations per minute",
+      "fullyQualifiedName": "Vehicle.OBD.EngineSpeed",
+      "unit": "rpm"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine percent torque data",
+      "fullyQualifiedName": "Vehicle.OBD.EngineTorquePoint2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine percent torque data",
+      "fullyQualifiedName": "Vehicle.OBD.EngineTorquePoint3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine percent torque data",
+      "fullyQualifiedName": "Vehicle.OBD.EngineTorquePoint4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine percent torque data",
+      "fullyQualifiedName": "Vehicle.OBD.EngineTorquePoint5"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.ErrorEgrA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded EGR and EGR Error",
+      "fullyQualifiedName": "Vehicle.OBD.ErrorEgrB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 52 - Percentage of ethanol in the fuel",
+      "fullyQualifiedName": "Vehicle.OBD.EthanolPercent",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust pressure",
+      "fullyQualifiedName": "Vehicle.OBD.ExhanustPressureBank1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust pressure",
+      "fullyQualifiedName": "Vehicle.OBD.ExhanustPressureBank2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Exhaust pressure",
+      "fullyQualifiedName": "Vehicle.OBD.ExhaustPressureSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 5D - Fuel injection timing",
+      "fullyQualifiedName": "Vehicle.OBD.FuelInjectionTiming",
+      "unit": "degrees"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 2F - Fuel level in the fuel tank",
+      "fullyQualifiedName": "Vehicle.OBD.FuelLevel",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemABank1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemABank2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemABank3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemABank4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemBBank1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemBBank2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemBBank3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPercentageUseSystemBBank4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0A - Fuel pressure",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPressure",
+      "min": 0.0,
+      "unit": "kPa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.FuelPressureControlSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailPressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 59 - Absolute fuel rail pressure",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailPressureAbsolute",
+      "unit": "kPa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailPressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 23 - Fuel rail pressure direct inject",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailPressureDirect",
+      "unit": "kPa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 22 - Fuel rail pressure relative to vacuum",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailPressureVac",
+      "unit": "kPa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailTemperatureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRailTemperatureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 5E - Engine fuel rate",
+      "fullyQualifiedName": "Vehicle.OBD.FuelRate",
+      "unit": "l/h"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 03 - Fuel status",
+      "fullyQualifiedName": "Vehicle.OBD.FuelStatus"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Percentage Use",
+      "fullyQualifiedName": "Vehicle.OBD.FuelSystemPercentageUseSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Control",
+      "fullyQualifiedName": "Vehicle.OBD.FuelSystemStatus"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Fuel System Control",
+      "fullyQualifiedName": "Vehicle.OBD.FuelSystemStatusSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 51 - Fuel type",
+      "fullyQualifiedName": "Vehicle.OBD.FuelType"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 5B - Remaining life of hybrid battery",
+      "fullyQualifiedName": "Vehicle.OBD.HybridBatteryRemaining",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Hybrid/EV Vehicle System Data, Battery, Voltage",
+      "fullyQualifiedName": "Vehicle.OBD.HybridEvCurrent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Hybrid/EV Vehicle System Data, Battery, Voltage",
+      "fullyQualifiedName": "Vehicle.OBD.HybridEvState"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Hybrid/EV Vehicle System Data, Battery, Voltage",
+      "fullyQualifiedName": "Vehicle.OBD.HybridEvSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Hybrid/EV Vehicle System Data, Battery, Voltage",
+      "fullyQualifiedName": "Vehicle.OBD.HybridEvVoltage"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine percent torque data",
+      "fullyQualifiedName": "Vehicle.OBD.IdelEngineTorquePoint1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Injection pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.InjectionControlPressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Injection pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.InjectionControlPressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Injection pressure control system",
+      "fullyQualifiedName": "Vehicle.OBD.InjectionPressureControlSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded Diesel intake air flow control and relative intake air flow",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeAirFlowSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0F - Intake temperature",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemp",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperature"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperatureBank1Senor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperatureBank1Senor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperatureBank1Senor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperatureBank2Senor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperatureBank2Senor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake air temperature sensor",
+      "fullyQualifiedName": "Vehicle.OBD.IntakeTemperatureBank2Senor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer",
+      "fullyQualifiedName": "Vehicle.OBD.LongTermFuelTrim1",
+      "max": 100.0,
+      "min": -100.0,
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 09 - Long Term (learned) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer",
+      "fullyQualifiedName": "Vehicle.OBD.LongTermFuelTrim2",
+      "max": 100.0,
+      "min": -100.0,
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Mass air flow sensor",
+      "fullyQualifiedName": "Vehicle.OBD.MAF"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 10 - Grams of air drawn into engine per second",
+      "fullyQualifiedName": "Vehicle.OBD.MAFRate",
+      "unit": "g/s"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0B - Intake manifold pressure",
+      "fullyQualifiedName": "Vehicle.OBD.MAP",
+      "min": 0.0,
+      "unit": "kPa"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Mass air flow sensor A",
+      "fullyQualifiedName": "Vehicle.OBD.MafA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Mass air flow sensor B",
+      "fullyQualifiedName": "Vehicle.OBD.MafB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake manifold absolute pressure",
+      "fullyQualifiedName": "Vehicle.OBD.ManifoldAbsolutePressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake manifold absolute pressure",
+      "fullyQualifiedName": "Vehicle.OBD.ManifoldAbsolutePressureA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Intake manifold absolute pressure",
+      "fullyQualifiedName": "Vehicle.OBD.ManifoldAbsolutePressureB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Manifold surface temperature",
+      "fullyQualifiedName": "Vehicle.OBD.ManifoldSurfaceTemperature"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Maximum value for Fuel–Air equivalence ratio,",
+      "fullyQualifiedName": "Vehicle.OBD.MaxEquivalenceRatio"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Maximum value for Fuel–Air equivalence ratio,",
+      "fullyQualifiedName": "Vehicle.OBD.MaxIntakeMAP"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Maximum value for Fuel–Air equivalence ratio,",
+      "fullyQualifiedName": "Vehicle.OBD.MaxOxygenSensorCurrent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Maximum value for Fuel–Air equivalence ratio,",
+      "fullyQualifiedName": "Vehicle.OBD.MaxOxygenSensorVoltage"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.MonitoringSystemCounter"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx reagent system",
+      "fullyQualifiedName": "Vehicle.OBD.NOxReagentSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx sensor",
+      "fullyQualifiedName": "Vehicle.OBD.NOxSensorBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx sensor",
+      "fullyQualifiedName": "Vehicle.OBD.NOxSensorBank1Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx sensor",
+      "fullyQualifiedName": "Vehicle.OBD.NOxSensorBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx sensor",
+      "fullyQualifiedName": "Vehicle.OBD.NOxSensorBank2Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx sensor",
+      "fullyQualifiedName": "Vehicle.OBD.NOxSensorSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.NOxWarningAndInducementSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PM NTE (Not-To-Exceed) control area status",
+      "fullyQualifiedName": "Vehicle.OBD.NTEControlAreaStatus"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx NTE (Not-To-Exceed) control area status",
+      "fullyQualifiedName": "Vehicle.OBD.NTEStatus"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 14 - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank1Sensor1",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 15 - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank1Sensor2",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 16 - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank1Sensor3",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 17 - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank1Sensor4",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 18 - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank2Sensor1",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 19 - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank2Sensor2",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 1A - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank2Sensor3",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 1B - Sensor voltage",
+      "fullyQualifiedName": "Vehicle.OBD.O2Bank2Sensor4",
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank1Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank1Sensor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank1Sensor4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank2Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank2Sensor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorConcentrationBank2Sensor4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank1Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank1Sensor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank1Sensor4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank2Sensor2"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank2Sensor3"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorLambdaBank2Sensor4"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor (Wide Range)",
+      "fullyQualifiedName": "Vehicle.OBD.O2SensorSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 13 - Presence of oxygen sensors for the banks",
+      "fullyQualifiedName": "Vehicle.OBD.O2Support"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "O2 Sensor Data",
+      "fullyQualifiedName": "Vehicle.OBD.O2SupportWideRange"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Odometer",
+      "fullyQualifiedName": "Vehicle.OBD.Odometer"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 5C - Engine oil temperature",
+      "fullyQualifiedName": "Vehicle.OBD.OilTemperature",
+      "unit": "celsius"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Particulate filter (DPF) temperature",
+      "fullyQualifiedName": "Vehicle.OBD.PFBank1InletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Particulate filter (DPF) temperature",
+      "fullyQualifiedName": "Vehicle.OBD.PFBank1OutletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Particulate filter (DPF) temperature",
+      "fullyQualifiedName": "Vehicle.OBD.PFBank2InletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Particulate filter (DPF) temperature",
+      "fullyQualifiedName": "Vehicle.OBD.PFBank2OutletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Particulate matter (PM) sensor",
+      "fullyQualifiedName": "Vehicle.OBD.PMSensorBank1Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Particulate matter (PM) sensor",
+      "fullyQualifiedName": "Vehicle.OBD.PMSensorBank2Sensor1"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Particulate matter (PM) sensor",
+      "fullyQualifiedName": "Vehicle.OBD.PMSensorSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank1DeltaPressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank1InletPressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank1OutletPressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank1Support"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank2DeltaPressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank2InletPressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank2OutletPressure"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel particulate",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterBank2Support"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Diesel Particulate filter (DPF) temperature",
+      "fullyQualifiedName": "Vehicle.OBD.ParticulateFilterTempSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 00 - Bit array of the supported pids 01 to 20",
+      "fullyQualifiedName": "Vehicle.OBD.PidsA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 20 - Bit array of the supported pids 21 to 40",
+      "fullyQualifiedName": "Vehicle.OBD.PidsB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 40 - Bit array of the supported pids 41 to 60",
+      "fullyQualifiedName": "Vehicle.OBD.PidsC"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.ReagentConsumptionCounter"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.ReagentQualityCounter"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx reagent system",
+      "fullyQualifiedName": "Vehicle.OBD.ReagentTankLevel"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine reference torque",
+      "fullyQualifiedName": "Vehicle.OBD.ReferenceEngineTorque"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 5A - Relative accelerator pedal position",
+      "fullyQualifiedName": "Vehicle.OBD.RelativeAcceleratorPosition",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded Diesel intake air flow control and relative intake air flow",
+      "fullyQualifiedName": "Vehicle.OBD.RelativeIntakeAirFlowA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded Diesel intake air flow control and relative intake air flow",
+      "fullyQualifiedName": "Vehicle.OBD.RelativeIntakeAirFlowB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded throttle actuator control and relative throttle position",
+      "fullyQualifiedName": "Vehicle.OBD.RelativePositionThrottleA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded throttle actuator control and relative throttle position",
+      "fullyQualifiedName": "Vehicle.OBD.RelativePositionThrottleB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 45 - Relative throttle position",
+      "fullyQualifiedName": "Vehicle.OBD.RelativeThrottlePosition",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 1F - Engine run time",
+      "fullyQualifiedName": "Vehicle.OBD.RunTime",
+      "unit": "s"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 4D - Run time with MIL on",
+      "fullyQualifiedName": "Vehicle.OBD.RunTimeMIL",
+      "unit": "min"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer",
+      "fullyQualifiedName": "Vehicle.OBD.ShortTermFuelTrim1",
+      "max": 100.0,
+      "min": -100.0,
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 08 - Short Term (immediate) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer",
+      "fullyQualifiedName": "Vehicle.OBD.ShortTermFuelTrim2",
+      "max": 100.0,
+      "min": -100.0,
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0D - Vehicle speed",
+      "fullyQualifiedName": "Vehicle.OBD.Speed",
+      "unit": "km/h"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "NOx Warning And Inducement System",
+      "fullyQualifiedName": "Vehicle.OBD.SystemStatus"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Commanded throttle actuator control and relative throttle position",
+      "fullyQualifiedName": "Vehicle.OBD.ThrottleActuatorSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 11 - Throttle position - 0 = closed throttle, 100 = open throttle",
+      "fullyQualifiedName": "Vehicle.OBD.ThrottlePosition",
+      "max": 100.0,
+      "min": 0.0,
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 47 - Absolute throttle position B",
+      "fullyQualifiedName": "Vehicle.OBD.ThrottlePositionB",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 48 - Absolute throttle position C",
+      "fullyQualifiedName": "Vehicle.OBD.ThrottlePositionC",
+      "unit": "percent"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 4E - Time since trouble codes cleared",
+      "fullyQualifiedName": "Vehicle.OBD.TimeSinceDTCCleared",
+      "unit": "min"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 0E - Time advance",
+      "fullyQualifiedName": "Vehicle.OBD.TimingAdvance",
+      "unit": "degrees"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Transmission Actual Gear",
+      "fullyQualifiedName": "Vehicle.OBD.TransmissionActualGearRatio"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Transmission Actual Gear",
+      "fullyQualifiedName": "Vehicle.OBD.TransmissionActualGearStatusSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger compressor inlet pressure",
+      "fullyQualifiedName": "Vehicle.OBD.TurboChargerInletPressureSensorA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger compressor inlet pressure",
+      "fullyQualifiedName": "Vehicle.OBD.TurboChargerInletPressureSensorB"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger compressor inlet pressure",
+      "fullyQualifiedName": "Vehicle.OBD.TurboChargerInletPressureSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerACompressorInletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerACompressorOutletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerATempSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerATurbineInletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerATurbineOutletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger RPM",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerArpm"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerBCompressorInletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerBCompressorOutletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerBTempSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerBTurbineInletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger temperature",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerBTurbineOutletTemp"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger RPM",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerBrpm"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Turbocharger RPM",
+      "fullyQualifiedName": "Vehicle.OBD.TurbochargerRpmSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Variable Geometry turbo (VGT) control",
+      "fullyQualifiedName": "Vehicle.OBD.VGTSupport"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Engine Fuel Rate",
+      "fullyQualifiedName": "Vehicle.OBD.VehicleFuelRate"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Variable Geometry turbo (VGT) control",
+      "fullyQualifiedName": "Vehicle.OBD.VgtAPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Variable Geometry turbo (VGT) control",
+      "fullyQualifiedName": "Vehicle.OBD.VgtBPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 34 - Current for wide range oxygen bank 1 sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor1Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 24 - Lambda for wide range oxygen bank 1 sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor1Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 24 - Voltage for wide range oxygen bank 1 sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor1Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 35 - Current for wide range oxygen bank 1 sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor2Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 25 - Lambda for wide range oxygen bank 1 sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor2Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 25 - Voltage for wide range oxygen bank 1 sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor2Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 36 - Current for wide range oxygen bank 1 sensor 3",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor3Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 26 - Lambda for wide range oxygen bank 1 sensor 3",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor3Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 26 - Voltage for wide range oxygen bank 1 sensor 3",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor3Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 37 - Current for wide range oxygen bank 1 sensor 4",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor4Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 27 - Lambda for wide range oxygen bank 1 sensor 4",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor4Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 27 - Voltage for wide range oxygen bank 1 sensor 4",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank1Sensor4Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 38 - Current for wide range oxygen bank 2 sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor1Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 28 - Lambda for wide range oxygen bank 2 sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor1Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 28 - Voltage for wide range oxygen bank 2 sensor 1",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor1Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 39 - Current for wide range oxygen bank 2 sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor2Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 29 - Lambda for wide range oxygen bank 2 sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor2Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 29 - Voltage for wide range oxygen bank 2 sensor 2",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor2Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 3A - Current for wide range oxygen bank 2 sensor 3",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor3Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 2A - Lambda for wide range oxygen bank 2 sensor 3",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor3Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 2A - Voltage for wide range oxygen bank 2 sensor 3",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor3Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 3B - Current for wide range oxygen bank 2 sensor 4",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor4Current",
+      "max": 127.996,
+      "min": -128.0,
+      "unit": "mA"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 2B - Lambda for wide range oxygen bank 2 sensor 4",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor4Lambda",
+      "max": 1.99,
+      "min": 0.0
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 2B - Voltage for wide range oxygen bank 2 sensor 4",
+      "fullyQualifiedName": "Vehicle.OBD.WRO2Bank2Sensor4Voltage",
+      "max": 7.99,
+      "min": 0.0,
+      "unit": "V"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "WWH-OBD Vehicle OBD Counters support",
+      "fullyQualifiedName": "Vehicle.OBD.WWHOBDSupported"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "PID 30 - Number of warm-ups since codes cleared",
+      "fullyQualifiedName": "Vehicle.OBD.WarmupsSinceDTCClear"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Wastegate control",
+      "fullyQualifiedName": "Vehicle.OBD.WastegateAPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Wastegate control",
+      "fullyQualifiedName": "Vehicle.OBD.WastegateBPosition"
+    }
+  },
+  {
+    "sensor": {
+      "dataType": "DOUBLE",
+      "description": "Wastegate control",
+      "fullyQualifiedName": "Vehicle.OBD.WastegateControlSupport"
+    }
+  }
+]

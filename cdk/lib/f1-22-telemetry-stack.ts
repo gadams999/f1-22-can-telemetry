@@ -22,7 +22,9 @@ import { NagSuppressions } from "cdk-nag"
 import { Construct } from "constructs"
 import { IotThingCertPolicy } from "../../cdk-constructs/IotThingCertPolicy"
 import { Asset } from "aws-cdk-lib/aws-s3-assets"
+import * as fleetwise from "cdk-aws-iotfleetwise"
 import * as constants from "./constants"
+import * as util from "./utils"
 
 export class F122TelemetryStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -34,24 +36,37 @@ export class F122TelemetryStack extends cdk.Stack {
         reason:
           "Access to stack logging bucket does not require separate logging for demonstrations. For production, this should be addressed in all stack S3 buckets.",
       },
+      // {
+      //   id: "AwsSolutions-L1",
+      //   reason:
+      //     "CDK uses an older version of Node for custom resource provider. Maintained by CDK",
+      // },
     ])
+
+    // NagSuppressions.addStackSuppressions(this, [
+    //   {
+    //     id: "AwsSolutions-L1",
+    //     reason:
+    //       "CDK uses an older version of Node for custom resource provider. Maintained by CDK",
+    //   },
+    // ])
 
     const stackName = cdk.Stack.of(this).stackName
     if (stackName.length > 20) {
       console.error("Stack name must be less than 20 characters in length")
       process.exitCode = 1
     }
-    const stackRandom: string = makeid(8, stackName)
+    const stackRandom: string = util.makeId(8, stackName)
 
     // Create AWS IoT thing/cert/policy
-    const fleetWiseCoreThingName = fullResourceName({
+    const fleetWiseCoreThingName = util.fullResourceName({
       stackName: stackName,
       baseName: "f1-car-core",
       suffix: stackRandom,
       resourceRegex: "a-zA-Z0-9:_-",
       maxLength: 128,
     })
-    const fleetWiseCoreIotPolicyName = fullResourceName({
+    const fleetWiseCoreIotPolicyName = util.fullResourceName({
       stackName: stackName,
       baseName: "f1-car-minimal-policy",
       suffix: stackRandom,
@@ -82,6 +97,85 @@ export class F122TelemetryStack extends cdk.Stack {
         MagneticStoreRetentionPeriodInDays: "2",
       },
     })
+
+    // create IAM role for FleetWise to work with Timestream
+    const fleetwiseServiceRole = new iam.Role(this, "FleetwiseServiceRole", {
+      roleName: "f1-telemetry-fleetwise-service-role",
+      assumedBy: new iam.ServicePrincipal("iotfleetwise.amazonaws.com"),
+    })
+    fleetwiseServiceRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ["timestream:WriteRecords", "timestream:Select"],
+        resources: [
+          `Arn:aws:timestream:${cdk.Fn.ref("AWS::Region")}:${cdk.Fn.ref(
+            "AWS::AccountId"
+          )}:database/${tsDatabase.ref}/*`,
+        ],
+      })
+    )
+    fleetwiseServiceRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ["cloudwatch:PutMetricData"],
+        resources: ["*"],
+      })
+    )
+    NagSuppressions.addResourceSuppressions(
+      fleetwiseServiceRole,
+      [
+        {
+          id: "AwsSolutions-IAM5",
+          reason:
+            "Service-linked role required by FleetWise to interact with specific Timestream DB/tables and emit CloudWatch metrics",
+        },
+      ],
+      true
+    )
+
+    // With FleetWise deps created, build signal catalog
+    const signalCatalog = new fleetwise.SignalCatalog(this, "SignalCatalog", {
+      description: "Testing stuff",
+      database: tsDatabase,
+      table: tsHeartBeatTable,
+      role: fleetwiseServiceRole,
+      nodes: [new fleetwise.SignalCatalogBranch("F1Vehicle")],
+    })
+    // cdk-iot-fleetwise
+    NagSuppressions.addResourceSuppressionsByPath(
+      this,
+      [
+        `/${this.stackName}/signalcataloghandler.on_event-provider/Provider/framework-onEvent/Resource`,
+        // This suppresses onEvent, isComplete, and onTimeout children if you don't want to specify them all
+        `/${this.stackName}/servicehandler.on_event-provider/Provider`,
+      ],
+      [
+        {
+          id: "AwsSolutions-L1",
+          reason:
+            "CDK uses an older version of Node for custom resource provider. Maintained by CDK",
+        },
+      ],
+      true
+    )
+    NagSuppressions.addResourceSuppressionsByPath(
+      this,
+      [
+        `/${this.stackName}/handler-role/Role/Resource`,
+        `/${this.stackName}/servicehandler.on_event-provider/Provider`,
+        `/${this.stackName}/signalcataloghandler.on_event-provider/Provider`,
+      ],
+      [
+        {
+          id: "AwsSolutions-IAM4",
+          reason:
+            "Lambda basic execution managed policy and custom resource provider",
+        },
+        {
+          id: "AwsSolutions-IAM5",
+          reason: "Resource permissions suitable for stack creation/deletion",
+        },
+      ],
+      true
+    )
 
     const logFileBucket = new s3.Bucket(this, "LogFileBucket", {
       bucketName: `${stackName}-logfiles-${cdk.Fn.ref(
@@ -208,9 +302,6 @@ export class F122TelemetryStack extends cdk.Stack {
     )
 
     // ec2 details for building
-    // instance type: tg4.large
-    // arch: Arm
-    // AMI: ami-0efabcf945ffd8831
     const telemetryInstance = new ec2.Instance(this, "TelemetryInstance", {
       instanceName: "telemetry-instance",
       vpc: vpc,
@@ -276,9 +367,10 @@ export class F122TelemetryStack extends cdk.Stack {
       "export INSTANCE_NAME=TelemetryInstance",
       `export SSM_CERT="${iotThingCertPol.certificatePemParameter}"`,
       `export SSM_KEY="${iotThingCertPol.privateKeySecretParameter}"`,
-      `export SSM_IOT_ENDPOINT="${iotThingCertPol.dataAtsEndpointAddress}"`,
+      `export IOT_ENDPOINT="${iotThingCertPol.dataAtsEndpointAddress}"`,
+      `export THING_NAME="${fleetWiseCoreThingName}"`,
       "apt update && DEBIAN_FRONTEND=noninteractive apt -y upgrade",
-      "DEBIAN_FRONTEND=noninteractive apt install -y awscli zip unzip"
+      "DEBIAN_FRONTEND=noninteractive apt install -y awscli zip unzip net-tools"
     )
     telemetryInstance.userData.addS3DownloadCommand({
       bucket: userDataAssets.bucket,
@@ -293,13 +385,13 @@ export class F122TelemetryStack extends cdk.Stack {
     telemetryInstance.userData.addCommands(
       "cd /tmp",
       "unzip assets.zip",
-      // "unzip f1telem.zip -d f1telem",
       "cp init-instance /usr/share/init-instance",
       "chmod +x /usr/share/init-instance",
       "/usr/share/init-instance",
       "cp edge-software-deploy /home/ubuntu/edge-software-deploy",
       "chmod +x /home/ubuntu/edge-software-deploy",
-      "sudo -H -u ubuntu REGION=$REGION SSM_CERT=$SSM_CERT SSM_KEY=$SSM_KEY IOT_ENDPOINT=$IOT_ENDPOINT /home/ubuntu/edge-software-deploy"
+      "sudo -H -u ubuntu REGION=$REGION SSM_CERT=$SSM_CERT SSM_KEY=$SSM_KEY IOT_ENDPOINT=$IOT_ENDPOINT THING_NAME=$THING_NAME /home/ubuntu/edge-software-deploy"
+      // add signal on instance
     )
     NagSuppressions.addResourceSuppressions(
       instanceRole,
@@ -311,42 +403,5 @@ export class F122TelemetryStack extends cdk.Stack {
       ],
       true
     )
-
-    function makeid(length: number, seed: string) {
-      // Generate a n-length random value for each resource
-      var result = ""
-      var characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-      var charactersLength = characters.length
-      seedrandom(seed, { global: true })
-      for (var i = 0; i < length; i++) {
-        result += characters.charAt(
-          Math.floor(Math.random() * charactersLength)
-        )
-      }
-      return result
-    }
-
-    interface ResourceName {
-      stackName: string
-      baseName: string
-      suffix: string
-      resourceRegex: string
-      maxLength: number
-    }
-
-    function fullResourceName({
-      stackName,
-      baseName,
-      suffix,
-      resourceRegex,
-      maxLength,
-    }: ResourceName) {
-      let re = new RegExp(`[^\\[${resourceRegex}]`, "g")
-      let resourceName = `${stackName}-${baseName}`.replace(re, "")
-      resourceName = resourceName.substring(0, maxLength - suffix.length - 1)
-      resourceName = `${resourceName}-${suffix}`
-      return resourceName
-    }
   }
 }

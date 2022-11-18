@@ -10,6 +10,7 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under the License.
  **/
+import * as fs from "fs"
 import * as seedrandom from "seedrandom"
 import * as cdk from "aws-cdk-lib"
 import { Construct, IConstruct } from "constructs"
@@ -121,4 +122,57 @@ export function makeId(length: number, seed: string) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength))
   }
   return result
+}
+
+// read from /dev/tty directly itself since cdk redirects stdin
+export function prompt(promptText: string) {
+  // https://github.com/nodejs/node/issues/26450#issue-417306344
+  const fd = fs.openSync("/dev/tty", "r")
+  const stream = fs.createReadStream("/dev/tty", {
+    flags: "r",
+    fd: fd,
+  })
+
+  process.stdout.write(promptText)
+
+  // https://stackoverflow.com/a/60203932/2276637
+  const CHAR_LF = 10
+  const CHAR_CR = 13
+  const data = []
+  const buffer = Buffer.alloc ? Buffer.alloc(1) : new Buffer(1)
+  while (true) {
+    const bytesRead = fs.readSync(fd, buffer, 0, 1, null)
+    if (bytesRead > 0) {
+      if (buffer[0] === CHAR_LF) {
+        break
+      } else if (buffer[0] !== CHAR_CR) {
+        data.push(Buffer.from(buffer))
+      }
+    }
+  }
+
+  stream.close()
+  return Buffer.concat(data).toString("utf-8")
+}
+
+interface ResourceName {
+  stackName: string
+  baseName: string
+  suffix: string
+  resourceRegex: string
+  maxLength: number
+}
+
+export function fullResourceName({
+  stackName,
+  baseName,
+  suffix,
+  resourceRegex,
+  maxLength,
+}: ResourceName) {
+  let re = new RegExp(`[^\\[${resourceRegex}]`, "g")
+  let resourceName = `${stackName}-${baseName}`.replace(re, "")
+  resourceName = resourceName.substring(0, maxLength - suffix.length - 1)
+  resourceName = `${resourceName}-${suffix}`
+  return resourceName
 }

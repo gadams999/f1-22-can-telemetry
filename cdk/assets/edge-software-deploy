@@ -31,6 +31,7 @@ sudo systemctl start f1telem.service
 # modify code for syslog - https://fabianlee.org/2017/05/21/golang-running-a-go-binary-as-a-systemd-service-on-ubuntu-16-04/
 
 # Next prepare FleetWise agent for operation
+cd ~
 cp /tmp/aws-iot-fleetwise-edge .
 cp /tmp/fw-config.json .
 aws --region=$REGION ssm get-parameter --name $SSM_CERT --output text --query Parameter.Value > /home/ubuntu/certificate.pem.crt
