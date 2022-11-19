@@ -2,14 +2,6 @@
   {
     "sensor": {
       "dataType": "DOUBLE",
-      "description": "PID 0C - Engine speed measured as rotations per minute",
-      "fullyQualifiedName": "OBD.EngineSpeed",
-      "unit": "rpm"
-    }
-  },
-  {
-    "sensor": {
-      "dataType": "DOUBLE",
       "description": "PID 43 - Absolute load value",
       "fullyQualifiedName": "Vehicle.OBD.AbsoluteLoad",
       "unit": "percent"

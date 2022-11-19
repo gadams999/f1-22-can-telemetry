@@ -30,26 +30,25 @@ export class F122TelemetryStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
+    // TODO - uncomment and provide descriptive prompt as to what will happen, pre-reqs, etc.
+    // const promptResponse = util.prompt(
+    //   "WARNING: Stack is a production stack. Continue? (y/n*): "
+    // )
+    // if (promptResponse.toLowerCase().trim() !== "y") {
+    //   process.exit(1)
+    // }
+
+    const signals = util.parseVssFile({
+      fileName: path.join(__dirname, "..", "assets", "sc_obd2.json"),
+    })
+
     NagSuppressions.addStackSuppressions(this, [
       {
         id: "AwsSolutions-S1",
         reason:
           "Access to stack logging bucket does not require separate logging for demonstrations. For production, this should be addressed in all stack S3 buckets.",
       },
-      // {
-      //   id: "AwsSolutions-L1",
-      //   reason:
-      //     "CDK uses an older version of Node for custom resource provider. Maintained by CDK",
-      // },
     ])
-
-    // NagSuppressions.addStackSuppressions(this, [
-    //   {
-    //     id: "AwsSolutions-L1",
-    //     reason:
-    //       "CDK uses an older version of Node for custom resource provider. Maintained by CDK",
-    //   },
-    // ])
 
     const stackName = cdk.Stack.of(this).stackName
     if (stackName.length > 20) {
@@ -132,12 +131,33 @@ export class F122TelemetryStack extends cdk.Stack {
     )
 
     // With FleetWise deps created, build signal catalog
+
+    const signalNodes: fleetwise.SignalCatalogSensor[] = [
+      new fleetwise.SignalCatalogBranch("Vehicle", "All vehicle signals"),
+      new fleetwise.SignalCatalogBranch(
+        "Vehicle.OBD",
+        "OBDII standard sensors"
+      ),
+    ]
+    signals.forEach((element) => {
+      signalNodes.push(
+        new fleetwise.SignalCatalogSensor(
+          element.sensor.fullyQualifiedName,
+          element.sensor.dataType,
+          element.sensor.unit,
+          element.sensor.min,
+          element.sensor.max,
+          element.sensor.description
+        )
+      )
+    })
+
     const signalCatalog = new fleetwise.SignalCatalog(this, "SignalCatalog", {
       description: "Testing stuff",
       database: tsDatabase,
       table: tsHeartBeatTable,
       role: fleetwiseServiceRole,
-      nodes: [new fleetwise.SignalCatalogBranch("F1Vehicle")],
+      nodes: signalNodes,
     })
     // cdk-iot-fleetwise
     NagSuppressions.addResourceSuppressionsByPath(
