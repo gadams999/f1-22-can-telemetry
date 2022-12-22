@@ -9,7 +9,7 @@
     "@aws-cdk/aws-lambda-python-alpha": "2.50.0-alpha.0",
     "@types/node": "18.11.8",
     "aws-cdk-lib": "2.50.0",
-    "constructs": "10.1.145",
+    "constructs": "10.0.5",
     "lodash": "4.17.21",
     "path": "0.12.7"
   },

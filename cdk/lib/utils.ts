@@ -11,7 +11,6 @@
  * License for the specific language governing permissions and limitations under the License.
  **/
 import * as fs from "fs"
-import * as path from "path"
 import * as seedrandom from "seedrandom"
 import * as cdk from "aws-cdk-lib"
 import { Construct, IConstruct } from "constructs"
@@ -176,31 +175,4 @@ export function fullResourceName({
   resourceName = resourceName.substring(0, maxLength - suffix.length - 1)
   resourceName = `${resourceName}-${suffix}`
   return resourceName
-}
-
-// VSS file for parsing to return FleetWise encoded signals - TODO - move as method to cdk-aws-iotfleetwise
-interface VssFile {
-  fileName: string
-}
-
-interface SignalCatalogSensor {
-  sensor: {
-    fullyQualifiedName: string
-    dataType: string
-    unit?: string
-    min?: number
-    max?: number
-    description?: string
-  }
-}
-
-export function parseVssFile({ fileName }: VssFile) {
-  const signals: SignalCatalogSensor[] = []
-  const vss: SignalCatalogSensor[] = JSON.parse(
-    fs.readFileSync(fileName, "utf-8")
-  )
-  vss.forEach((element) => {
-    signals.push(element)
-  })
-  return signals
 }

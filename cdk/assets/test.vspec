@@ -1,0 +1,5 @@
+O2:
+  instances:
+    - Sensor[1,8]
+  type: branch
+  description: Oxygen sensors (PID 14 - PID 1B)

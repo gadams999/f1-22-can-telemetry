@@ -110,7 +110,6 @@ export class IotThingCertPolicy extends Construct {
     // lodash that creates template then applies the mapping
     var policyTemplate = _.template(props.iotPolicy)
     var iotPolicy = policyTemplate(policyParameters)
-    console.log(iotPolicy)
 
     const provider = IotThingCertPolicy.getOrCreateProvider(
       this,
