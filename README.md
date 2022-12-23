@@ -8,3 +8,7 @@ Objective is to take in telemetry, convert to CAN data, then define a VSS and pr
 
 1. Clone repo
 1. From CDK, deploy stack (see README.md)
+
+## Telemetry to CAN
+
+F1 Telemetry details to CAN.

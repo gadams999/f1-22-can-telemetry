@@ -60,13 +60,23 @@ func main() {
 				if err != nil {
 					log.Println("Error parsing telemetry packet ", err)
 				}
-
 				// Read the player's car telemetry
-				playerData, err := packet.PlayerData(telemetryData)
+				playerData, err := packet.GetPlayerTelemetryData(telemetryData)
 				if err != nil {
 					log.Println("Error getting player data ", err)
 				}
-				SendToCan(playerData, canCon)
+				SendToCanTelemetry(playerData, canCon)
+			} else if eventType == 7 {
+				statusData, err := packet.StatusPacket(buffer)
+				if err != nil {
+					log.Println("Error parsing car status packet ", err)
+				}
+				// Read the player's car status
+				playerData, err := packet.GetPlayerStatusData(statusData)
+				if err != nil {
+					log.Println("Error getting player data ", err)
+				}
+				SendToCanStatus(playerData, canCon)
 			}
 		}
 	}()
@@ -75,11 +85,12 @@ func main() {
 	log.Print("Stopping f1telem service")
 }
 
-func SendToCan(telem packet.PlayerTelemetryData, conn net.Conn) {
+func SendToCanTelemetry(telem packet.PlayerTelemetryData, conn net.Conn) {
 	var speed_obd2 uint8
 	var speed_custom uint16
 	var rpm_obd2 uint16
 	var throttle_obd2 uint8
+	var engine_coolant_temperature_obd2 uint8
 	var frame can.Frame
 	tx := socketcan.NewTransmitter(conn)
 
@@ -90,12 +101,12 @@ func SendToCan(telem packet.PlayerTelemetryData, conn net.Conn) {
 		speed_obd2 = 255
 	}
 	speed_custom = telem.CarTelemetryData.M_speed
-	// OBD2
+	// Write OBDII speed to CAN
 	frame.ID = 0xd
 	frame.Length = 1
 	CanFrameUnsignedBigEndian(&frame, uint64(speed_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
-	// Custom (PID 0xd0)
+	// Write Custom speed to CAN on PID 0xd0
 	frame.ID = 0xd0
 	frame.Length = 2
 	CanFrameUnsignedBigEndian(&frame, uint64(speed_custom))
@@ -119,10 +130,36 @@ func SendToCan(telem packet.PlayerTelemetryData, conn net.Conn) {
 
 	// Write engine coolant temperature to CAN
 	// OBD2 coolant = A - 40
-	throttle_obd2 = uint8(telem.CarTelemetryData.M_engineTemperature + 40)
+	engine_coolant_temperature_obd2 = uint8(telem.CarTelemetryData.M_engineTemperature + 40)
 	frame.ID = 0x5
 	frame.Length = 1
-	CanFrameUnsignedBigEndian(&frame, uint64(throttle_obd2))
+	CanFrameUnsignedBigEndian(&frame, uint64(engine_coolant_temperature_obd2))
+	_ = tx.TransmitFrame(context.Background(), frame)
+
+	// Write Rearwing
+}
+
+func SendToCanStatus(status packet.PlayerStatusData, conn net.Conn) {
+	var fuel_capacity float32 // fuel capacity
+	var fuel_mass float32     // current fuel mass (fuel in tank)
+	var frame can.Frame
+	tx := socketcan.NewTransmitter(conn)
+
+	log.Println("player status data frame: ", status)
+	// Write fuel capacity to CAN on PID 0xd1
+	fuel_capacity = status.CarStatusData.M_fuelCapacity
+
+	frame.ID = 0xd1
+	frame.Length = 4
+	CanFrameUnsignedBigEndian(&frame, uint64(fuel_capacity))
+	_ = tx.TransmitFrame(context.Background(), frame)
+
+	// Write current fuel mass to CAN on PID 0xd2
+	fuel_mass = status.CarStatusData.M_fuelInTank
+	frame.ID = 0xd2
+	frame.Length = 4
+	CanFrameUnsignedBigEndian(&frame, uint64(fuel_mass))
+	log.Println("status CAN frame is", frame)
 	_ = tx.TransmitFrame(context.Background(), frame)
 }
 

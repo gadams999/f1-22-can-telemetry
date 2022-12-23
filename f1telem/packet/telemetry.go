@@ -66,7 +66,7 @@ func TelemetryPacket(pkt []byte) (pktTelemetryData, error) {
 	}
 }
 
-func PlayerData(fullTelem pktTelemetryData) (PlayerTelemetryData, error) {
+func GetPlayerTelemetryData(fullTelem pktTelemetryData) (PlayerTelemetryData, error) {
 	var playerIndex int8
 	var playerTelem PlayerTelemetryData
 
