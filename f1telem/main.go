@@ -87,29 +87,31 @@ func main() {
 
 func SendToCanTelemetry(telem packet.PlayerTelemetryData, conn net.Conn) {
 	var speed_obd2 uint8
-	var speed_custom uint16
+	var speed uint16
 	var rpm_obd2 uint16
 	var throttle_obd2 uint8
 	var engine_coolant_temperature_obd2 uint8
 	var frame can.Frame
 	tx := socketcan.NewTransmitter(conn)
 
-	// Write the vehicle speed to CAN
+	// Calculate speeds
+
+	// Write OBDII speed
 	if telem.CarTelemetryData.M_speed <= 255 {
 		speed_obd2 = uint8(telem.CarTelemetryData.M_speed)
 	} else {
 		speed_obd2 = 255
 	}
-	speed_custom = telem.CarTelemetryData.M_speed
-	// Write OBDII speed to CAN
-	frame.ID = 0xd
+	frame.ID = 0x400
 	frame.Length = 1
 	CanFrameUnsignedBigEndian(&frame, uint64(speed_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
+
 	// Write Custom speed to CAN on PID 0xd0
-	frame.ID = 0xd0
+	frame.ID = 0x401
 	frame.Length = 2
-	CanFrameUnsignedBigEndian(&frame, uint64(speed_custom))
+	speed = (uint16)((float32(telem.CarTelemetryData.M_speed) - -100) / 0.1)
+	CanFrameUnsignedBigEndian(&frame, uint64(speed))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
 	// Write the RPM value to CAN
@@ -135,8 +137,6 @@ func SendToCanTelemetry(telem packet.PlayerTelemetryData, conn net.Conn) {
 	frame.Length = 1
 	CanFrameUnsignedBigEndian(&frame, uint64(engine_coolant_temperature_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
-
-	// Write Rearwing
 }
 
 func SendToCanStatus(status packet.PlayerStatusData, conn net.Conn) {
@@ -145,10 +145,9 @@ func SendToCanStatus(status packet.PlayerStatusData, conn net.Conn) {
 	var frame can.Frame
 	tx := socketcan.NewTransmitter(conn)
 
-	log.Println("player status data frame: ", status)
+	// log.Println("player status data frame: ", status)
 	// Write fuel capacity to CAN on PID 0xd1
 	fuel_capacity = status.CarStatusData.M_fuelCapacity
-
 	frame.ID = 0xd1
 	frame.Length = 4
 	CanFrameUnsignedBigEndian(&frame, uint64(fuel_capacity))
@@ -159,7 +158,7 @@ func SendToCanStatus(status packet.PlayerStatusData, conn net.Conn) {
 	frame.ID = 0xd2
 	frame.Length = 4
 	CanFrameUnsignedBigEndian(&frame, uint64(fuel_mass))
-	log.Println("status CAN frame is", frame)
+	// log.Println("status CAN frame is", frame)
 	_ = tx.TransmitFrame(context.Background(), frame)
 }
 

@@ -1,0 +1,91 @@
+VERSION ""
+
+
+NS_ : 
+		NS_DESC_
+		CM_
+		BA_DEF_
+		BA_
+		VAL_
+		CAT_DEF_
+		CAT_
+		FILTER
+		BA_DEF_DEF_
+		EV_DATA_
+		ENVVAR_DATA_
+		SGTYPE_
+		SGTYPE_VAL_
+		BA_DEF_SGTYPE_
+		BA_SGTYPE_
+		SIG_TYPE_REF_
+		VAL_TABLE_
+		SIG_GROUP_
+		SIG_VALTYPE_
+		SIGTYPE_VALTYPE_
+		BO_TX_BU_
+		BA_DEF_REL_
+		BA_REL_
+		BA_DEF_DEF_REL_
+		BU_SG_REL_
+		BU_EV_REL_
+		BU_BO_REL_
+		SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+
+BO_ 1024 OBD2_Compat_VehicleSpeed: 1 Vector__XXX
+	SG_ VehicleSpeed : 7|8@0+ (1,0) [0|255] "km/h" Vector__XXX
+	
+BO_ 1025 F1_VehicleSpeed: 2 Vector__XXX
+	SG_ VehicleSpeed : 7|16@0+ (0.1,0) [0|1000] "km/h" Vector__XXX
+
+BO_ 1026 F1_EngineRPM: 2 Vector__XXX
+	SG_ EngineRPM : 7|16@0+ (0.25,0) [0|16383.75] "rpm" Vector__XXX
+
+BO_ 1027 F1_Throttle_Position: 1 Vector__XXX
+	SG_ ThrottlePosition : 7|8@0+ (0.39216,0) [0|100] "%" Vector__XXX
+
+BO_ 1028 F1_EngineCoolantTemp: 1 Vector__XXX
+	SG_ EngineCoolantTemp : 7|8@0+ (1,-40) [-40|215] "degC" Vector__XXX
+
+BO_ 1029 F1_FuelCapacity: 2 Vector__XXX
+	SG_ FuelCapacity : 7|16@0+ (0.01,0) [0|200] "l" Vector__XXX
+
+BO_ 1030 FuelMass: 2 Vector__XXX
+	SG_ FuelMass : 7|16@0+ (0.01,0) [0|200] "l" Vector__XXX
+
+
+
+CM_ BO_ 1024 "Vehicle Speed (OBDII length)";
+CM_ BO_ 1025 "Vehicle Speed (16 bit length)";
+CM_ SG_ 1025 VehicleSpeed "Vehicle speed with higher top speed";
+CM_ BO_ 1026 "Engine RPM";
+CM_ BO_ 1027 "Throttle position";
+CM_ SG_ 1027 ThrottlePosition "Throttle position from OBDII";
+CM_ BO_ 1028 "Engine coolant temperature";
+CM_ SG_ 1028 EngineCoolantTemp "Engine coolant temperature (C)";
+CM_ BO_ 1029 "Fuel cell capacity";
+CM_ SG_ 1029 FuelCapacity "Fuel cell capacity in liters";
+CM_ BO_ 1030 "Fuel mass left in cell";
+CM_ SG_ 1030 FuelMass "Fuel mass left in cell";
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_  "DatabaseVersion" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DatabaseCompiler" STRING ;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "DatabaseVersion" "DEMO PLUS";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "ProtocolType" "";
+BA_DEF_DEF_  "DatabaseCompiler" "";
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "DatabaseCompiler" "CSS ELECTRONICS (WWW.CSSELECTRONICS.COM)";
+BA_ "DatabaseVersion" "1.0.0";
+BA_ "VFrameFormat" BO_ 2566844926 3;
