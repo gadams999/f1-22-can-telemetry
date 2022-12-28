@@ -39,5 +39,8 @@ aws --region=$REGION ssm get-parameter --name $SSM_KEY --with-decryption --outpu
 sed -i "s/THING_NAME/$THING_NAME/g" fw-config.json
 sed -i "s/IOT_ENDPOINT/$IOT_ENDPOINT/g" fw-config.json
 mkdir fleetwise_data
+sudo cp /tmp/fleetwise-agent.service /etc/systemd/system/fleetwise-agent.service
+sudo chmod 755 /etc/systemd/system/fleetwise-agent.service
+sudo systemctl enable fleetwise-agent.service
+sudo systemctl start fleetwise-agent.service
 
-# Create systemd startup

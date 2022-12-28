@@ -34,10 +34,18 @@ export const fleetWiseMinimalIoTPolicy = `{
     },
     {
       "Effect": "Allow",
-      "Action": ["iot:Subscribe", "iot:Receive"],
+      "Action": ["iot:Subscribe"],
       "Resource": [
         "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/collection_schemes",
         "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/decoder_manifests"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Receive"],
+      "Resource": [
+        "arn:aws:iot:<%= region %>:<%= account %>:topic/$aws/iotfleetwise/vehicles/<%= thingname %>*/collection_schemes",
+        "arn:aws:iot:<%= region %>:<%= account %>:topic/$aws/iotfleetwise/vehicles/<%= thingname %>*/decoder_manifests"
       ]
     }
   ]
