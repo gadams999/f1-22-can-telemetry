@@ -22,11 +22,11 @@ export const fleetWiseMinimalIoTPolicy = `{
     {
       "Effect": "Allow",
       "Action": ["iot:Connect"],
-      "Resource": "arn:aws:iot:<%= region %>:<%= account %>:client/<%= thingname %>*"
+      "Resource": "arn:aws:iot:<%= region %>:<%= account %>:client/<%= thingname %>"
     },
     {
       "Effect": "Allow",
-      "Action": ["iot:Receive", "iot:Publish"],
+      "Action": ["iot:Publish"],
       "Resource": [
         "arn:aws:iot:<%= region %>:<%= account %>:topic/$aws/iotfleetwise/vehicles/<%= thingname %>*/checkins",
         "arn:aws:iot:<%= region %>:<%= account %>:topic/$aws/iotfleetwise/vehicles/<%= thingname %>*/signals"
@@ -34,7 +34,7 @@ export const fleetWiseMinimalIoTPolicy = `{
     },
     {
       "Effect": "Allow",
-      "Action": ["iot:Subscribe"],
+      "Action": ["iot:Subscribe", "iot:Receive"],
       "Resource": [
         "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/collection_schemes",
         "arn:aws:iot:<%= region %>:<%= account %>:topicfilter/$aws/iotfleetwise/vehicles/<%= thingname %>*/decoder_manifests"

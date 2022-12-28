@@ -5,7 +5,7 @@
       "canInterface": {
         "interfaceName": "vcan0",
         "protocolName": "CAN",
-        "protocolVersion": "2.0A"
+        "protocolVersion": "2.0B"
       },
       "interfaceId": "1",
       "type": "canInterface"
@@ -34,13 +34,13 @@
       "canDecoderThreadIdleTimeMs": 50
     },
     "persistency": {
-      "persistencyPath": "/path/to/collection-scheme-and-data-persistency",
+      "persistencyPath": "fleetwise_data",
       "persistencyPartitionMaxSize": 524288,
       "persistencyUploadRetryIntervalMs": 10000
     },
     "internalParameters": {
       "readyToPublishDataBufferSize": 10000,
-      "systemWideLogLevel": "Error",
+      "systemWideLogLevel": "Info",
       "dataReductionProbabilityDisabled": false,
       "useJsonBasedCollection": false
     },

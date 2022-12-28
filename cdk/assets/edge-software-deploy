@@ -38,5 +38,6 @@ aws --region=$REGION ssm get-parameter --name $SSM_CERT --output text --query Pa
 aws --region=$REGION ssm get-parameter --name $SSM_KEY --with-decryption --output text --query Parameter.Value > /home/ubuntu/private.pem.key
 sed -i "s/THING_NAME/$THING_NAME/g" fw-config.json
 sed -i "s/IOT_ENDPOINT/$IOT_ENDPOINT/g" fw-config.json
+mkdir fleetwise_data
 
 # Create systemd startup

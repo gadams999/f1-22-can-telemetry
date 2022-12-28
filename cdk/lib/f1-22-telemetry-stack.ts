@@ -57,7 +57,7 @@ export class F122TelemetryStack extends cdk.Stack {
     // Create AWS IoT thing/cert/policy
     const fleetWiseCoreThingName = util.fullResourceName({
       stackName: stackName,
-      baseName: "f1-car-core",
+      baseName: "f1-car",
       suffix: stackRandom,
       resourceRegex: "a-zA-Z0-9:_-",
       maxLength: 128,
@@ -145,6 +145,18 @@ export class F122TelemetryStack extends cdk.Stack {
         fullyQualifiedName: "Vehicle.FormulaOne",
         description: "Signals specific to F1 vehicles",
       }),
+      new fleetwise.SignalCatalogSensor({
+        fullyQualifiedName: "Vehicle.FormulaOne.Speed",
+        dataType: "FLOAT",
+      }),
+      new fleetwise.SignalCatalogAttribute({
+        fullyQualifiedName: "Manufacturer",
+        dataType: "STRING",
+      }),
+      new fleetwise.SignalCatalogAttribute({
+        fullyQualifiedName: "ModelYear",
+        dataType: "STRING",
+      }),
     ]
 
     const signalCatalog = new fleetwise.SignalCatalog(this, "SignalCatalog", {
@@ -194,6 +206,77 @@ export class F122TelemetryStack extends cdk.Stack {
       ],
       true
     )
+
+    // Create vehicle manifest
+    const f1VehicleModelA = new fleetwise.VehicleModel(
+      this,
+      "F1VehicleModelA",
+      {
+        signalCatalog: signalCatalog,
+        name: "F1_22_Vehicle",
+        description: "F1 22 vehicle model specification",
+        networkInterfaces: [
+          new fleetwise.CanVehicleInterface({
+            interfaceId: "1",
+            name: "vcan0",
+          }),
+        ],
+        signals: [
+          new fleetwise.CanVehicleSignal({
+            fullyQualifiedName: "Vehicle.OBD.Speed",
+            interfaceId: "1",
+            messageId: 1024,
+            factor: 1.0,
+            isBigEndian: true,
+            isSigned: false,
+            length: 8,
+            offset: 0.0,
+            startBit: 7,
+          }),
+          new fleetwise.CanVehicleSignal({
+            fullyQualifiedName: "Vehicle.FormulaOne.Speed",
+            interfaceId: "1",
+            messageId: 1025,
+            factor: 0.1,
+            isBigEndian: true,
+            isSigned: false,
+            length: 16,
+            offset: 0.0,
+            startBit: 7,
+          }),
+          new fleetwise.AttributeVehicleSignal({
+            fullyQualifiedName: "Manufacturer",
+          }),
+          new fleetwise.AttributeVehicleSignal({
+            fullyQualifiedName: "ModelYear",
+          }),
+        ],
+      }
+    )
+
+    const vinF1Vehicle = new fleetwise.Vehicle(this, "VinF1Vehicle", {
+      vehicleName: fleetWiseCoreThingName,
+      vehicleModel: f1VehicleModelA,
+      createIotThing: false,
+      attributes: {
+        Manufacturer: "EA Sports",
+        ModelYear: "2022",
+      },
+    })
+    vinF1Vehicle.node.addDependency(iotThingCertPol)
+
+    const campaign = new fleetwise.Campaign(this, "VehicleCampaign", {
+      name: "TimeBasedCollection",
+      target: vinF1Vehicle,
+      autoApprove: true,
+      collectionScheme: new fleetwise.TimeBasedCollectionScheme(
+        cdk.Duration.seconds(10)
+      ),
+      signals: [
+        new fleetwise.CampaignSignal("Vehicle.OBD.Speed"),
+        new fleetwise.CampaignSignal("Vehicle.FormulaOne.Speed"),
+      ],
+    })
 
     const logFileBucket = new s3.Bucket(this, "LogFileBucket", {
       bucketName: `${stackName}-logfiles-${cdk.Fn.ref(

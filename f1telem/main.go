@@ -110,7 +110,7 @@ func SendToCanTelemetry(telem packet.PlayerTelemetryData, conn net.Conn) {
 	// Write Custom speed to CAN on PID 0xd0
 	frame.ID = 0x401
 	frame.Length = 2
-	speed = (uint16)((float32(telem.CarTelemetryData.M_speed) - -100) / 0.1)
+	speed = (uint16)(float32(telem.CarTelemetryData.M_speed) / 0.1)
 	CanFrameUnsignedBigEndian(&frame, uint64(speed))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
