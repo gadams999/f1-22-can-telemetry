@@ -115,6 +115,24 @@ export class F122TelemetryStack extends cdk.Stack {
         resources: ["*"],
       })
     )
+    // Allow FleetWise to send logs to CloudWatch Logs
+    fleetwiseServiceRole.addToPolicy(
+      new iam.PolicyStatement({
+        sid: "IoTFleetwiseLoggingCWL",
+        actions: [
+          "logs:CreateLogDelivery",
+          "logs:GetLogDelivery",
+          "logs:UpdateLogDelivery",
+          "logs:DeleteLogDelivery",
+          "logs:ListLogDeliveries",
+          "logs:PutResourcePolicy",
+          "logs:DescribeResourcePolicies",
+          "logs:DescribeLogGroups",
+        ],
+        resources: ["*"],
+      })
+    )
+
     NagSuppressions.addResourceSuppressions(
       fleetwiseServiceRole,
       [
@@ -127,9 +145,15 @@ export class F122TelemetryStack extends cdk.Stack {
       true
     )
 
+    // Enable Fleetwise logging for errors
+    new fleetwise.Logging(this, "FleetWiseLogging", {
+      logGroupName: "AWSIotFleetWiseLogsV1",
+      enableLogging: "ERROR",
+    })
+
     // Start the catalog with top level branches for vehicle data
-    // Our Formula 1 car will emit general OBDII signals along with
-    // custom signals such as rear flap position.
+    // OBD-like data will use signals in Vehicle.OBD while custom
+    // signals will be in Vehicle.FormulaOne
     const signalNodes: fleetwise.SignalCatalogSensor[] = [
       // Parent of all signals and branches
       new fleetwise.SignalCatalogBranch({
@@ -147,7 +171,9 @@ export class F122TelemetryStack extends cdk.Stack {
       }),
       new fleetwise.SignalCatalogSensor({
         fullyQualifiedName: "Vehicle.FormulaOne.Speed",
+        description: "Speed from custom signal",
         dataType: "FLOAT",
+        unit: "km/h",
       }),
       new fleetwise.SignalCatalogAttribute({
         fullyQualifiedName: "Manufacturer",
@@ -168,6 +194,7 @@ export class F122TelemetryStack extends cdk.Stack {
       vssPrefix: "Vehicle.OBD",
       vssGeneratePrefixBranch: false,
     })
+    signalCatalog.node.addDependency(fleetwiseServiceRole)
 
     // cdk-iot-fleetwise
     NagSuppressions.addResourceSuppressionsByPath(
@@ -231,7 +258,7 @@ export class F122TelemetryStack extends cdk.Stack {
             isSigned: false,
             length: 8,
             offset: 0.0,
-            startBit: 7,
+            startBit: 0,
           }),
           new fleetwise.CanVehicleSignal({
             fullyQualifiedName: "Vehicle.FormulaOne.Speed",
@@ -242,7 +269,7 @@ export class F122TelemetryStack extends cdk.Stack {
             isSigned: false,
             length: 16,
             offset: 0.0,
-            startBit: 7,
+            startBit: 8,
           }),
           new fleetwise.AttributeVehicleSignal({
             fullyQualifiedName: "Manufacturer",
