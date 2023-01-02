@@ -271,6 +271,28 @@ export class F122TelemetryStack extends cdk.Stack {
             offset: 0.0,
             startBit: 8,
           }),
+          new fleetwise.CanVehicleSignal({
+            fullyQualifiedName: "Vehicle.OBD.EngineSpeed",
+            interfaceId: "1",
+            messageId: 1026,
+            factor: 0.25,
+            isBigEndian: true,
+            isSigned: false,
+            length: 16,
+            offset: 0.0,
+            startBit: 8,
+          }),
+          new fleetwise.CanVehicleSignal({
+            fullyQualifiedName: "Vehicle.OBD.ThrottlePosition",
+            interfaceId: "1",
+            messageId: 1027,
+            factor: 0.39215686274,
+            isBigEndian: true,
+            isSigned: false,
+            length: 8,
+            offset: 0.0,
+            startBit: 0,
+          }),
           new fleetwise.AttributeVehicleSignal({
             fullyQualifiedName: "Manufacturer",
           }),
@@ -302,6 +324,8 @@ export class F122TelemetryStack extends cdk.Stack {
       signals: [
         new fleetwise.CampaignSignal("Vehicle.OBD.Speed"),
         new fleetwise.CampaignSignal("Vehicle.FormulaOne.Speed"),
+        new fleetwise.CampaignSignal("Vehicle.OBD.EngineSpeed"),
+        new fleetwise.CampaignSignal("Vehicle.OBD.ThrottlePosition"),
       ],
     })
 
@@ -441,15 +465,9 @@ export class F122TelemetryStack extends cdk.Stack {
         // TODO - set to SMALL when done developing
         ec2.InstanceSize.MEDIUM
       ),
-      // CDK error resolving from latestAmazonLinux, using SSM specific: https://github.com/aws/aws-cdk/issues/21011
       machineImage: ec2.MachineImage.fromSsmParameter(
         "/aws/service/canonical/ubuntu/server/22.04/stable/current/arm64/hvm/ebs-gp2/ami-id"
       ),
-      // machineImage: ec2.MachineImage.latestAmazonLinux({
-      //   generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2022,
-      //   edition: ec2.AmazonLinuxEdition.STANDARD,
-      //   cpuType: ec2.AmazonLinuxCpuType.ARM_64,
-      // }),
       blockDevices: [
         {
           deviceName: "/dev/sda1",

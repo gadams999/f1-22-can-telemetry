@@ -104,38 +104,37 @@ func SendToCanTelemetry(telem packet.PlayerTelemetryData, conn net.Conn) {
 	}
 	frame.ID = 0x400
 	frame.Length = 1
-	CanFrameUnsignedBigEndian(&frame, uint64(speed_obd2))
+	UnsignedBigEndianToCanFrame(&frame, uint64(speed_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
-	// Write Custom speed to CAN on PID 0xd0
+	// Write Custom speed to CAN
 	frame.ID = 0x401
 	frame.Length = 2
 	speed = (uint16)(float32(telem.CarTelemetryData.M_speed) / 0.1)
-	CanFrameUnsignedBigEndian(&frame, uint64(speed))
+	UnsignedBigEndianToCanFrame(&frame, uint64(speed))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
 	// Write the RPM value to CAN
-	// OBD2 rpm = (A*256 + B)/4
-	rpm_obd2 = telem.CarTelemetryData.M_engineRPM * 4
-	frame.ID = 0xc
+	frame.ID = 0x402
 	frame.Length = 2
-	CanFrameUnsignedBigEndian(&frame, uint64(rpm_obd2))
+	rpm_obd2 = (uint16)(float32(telem.CarTelemetryData.M_engineRPM) / 0.25)
+	UnsignedBigEndianToCanFrame(&frame, uint64(rpm_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
 	// Write Throttle position to CAN
-	// OBD2 throttle = (100/255)*A
-	throttle_obd2 = uint8(telem.CarTelemetryData.M_throttle * 255)
-	frame.ID = 0x11
+	frame.ID = 0x403
 	frame.Length = 1
-	CanFrameUnsignedBigEndian(&frame, uint64(throttle_obd2))
+	throttle_obd2 = (uint8)(float32(telem.CarTelemetryData.M_throttle) / (1 / 2.55) * 100)
+	UnsignedBigEndianToCanFrame(&frame, uint64(throttle_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
+	// TODO - pick up  here.
 	// Write engine coolant temperature to CAN
 	// OBD2 coolant = A - 40
 	engine_coolant_temperature_obd2 = uint8(telem.CarTelemetryData.M_engineTemperature + 40)
 	frame.ID = 0x5
 	frame.Length = 1
-	CanFrameUnsignedBigEndian(&frame, uint64(engine_coolant_temperature_obd2))
+	UnsignedBigEndianToCanFrame(&frame, uint64(engine_coolant_temperature_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
 }
 
@@ -150,20 +149,20 @@ func SendToCanStatus(status packet.PlayerStatusData, conn net.Conn) {
 	fuel_capacity = status.CarStatusData.M_fuelCapacity
 	frame.ID = 0xd1
 	frame.Length = 4
-	CanFrameUnsignedBigEndian(&frame, uint64(fuel_capacity))
+	UnsignedBigEndianToCanFrame(&frame, uint64(fuel_capacity))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
 	// Write current fuel mass to CAN on PID 0xd2
 	fuel_mass = status.CarStatusData.M_fuelInTank
 	frame.ID = 0xd2
 	frame.Length = 4
-	CanFrameUnsignedBigEndian(&frame, uint64(fuel_mass))
+	UnsignedBigEndianToCanFrame(&frame, uint64(fuel_mass))
 	// log.Println("status CAN frame is", frame)
 	_ = tx.TransmitFrame(context.Background(), frame)
 }
 
 // Copy the Unsigned value to the CAN frame in big endian format
-func CanFrameUnsignedBigEndian(frame *can.Frame, value uint64) {
+func UnsignedBigEndianToCanFrame(frame *can.Frame, value uint64) {
 	buf := make([]byte, frame.Length)
 	switch frame.Length {
 	case 1:
