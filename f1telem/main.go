@@ -128,34 +128,32 @@ func SendToCanTelemetry(telem packet.PlayerTelemetryData, conn net.Conn) {
 	UnsignedBigEndianToCanFrame(&frame, uint64(throttle_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
-	// TODO - pick up  here.
 	// Write engine coolant temperature to CAN
-	// OBD2 coolant = A - 40
-	engine_coolant_temperature_obd2 = uint8(telem.CarTelemetryData.M_engineTemperature + 40)
-	frame.ID = 0x5
+	// OBD2 coolant = A - 40 (so add 40)
+	frame.ID = 0x404
 	frame.Length = 1
+	engine_coolant_temperature_obd2 = (uint8)(telem.CarTelemetryData.M_engineTemperature + 40)
 	UnsignedBigEndianToCanFrame(&frame, uint64(engine_coolant_temperature_obd2))
 	_ = tx.TransmitFrame(context.Background(), frame)
 }
 
 func SendToCanStatus(status packet.PlayerStatusData, conn net.Conn) {
-	var fuel_capacity float32 // fuel capacity
-	var fuel_mass float32     // current fuel mass (fuel in tank)
+	var fuel_capacity uint16 // fuel capacity
+	var fuel_mass uint16     // current fuel mass (fuel in tank)
 	var frame can.Frame
 	tx := socketcan.NewTransmitter(conn)
 
-	// log.Println("player status data frame: ", status)
-	// Write fuel capacity to CAN on PID 0xd1
-	fuel_capacity = status.CarStatusData.M_fuelCapacity
-	frame.ID = 0xd1
-	frame.Length = 4
+	// Write fuel capacity to CAN (max fuel in liters)
+	frame.ID = 0x405
+	frame.Length = 2
+	fuel_capacity = (uint16)(float32(status.CarStatusData.M_fuelCapacity) / 0.01)
 	UnsignedBigEndianToCanFrame(&frame, uint64(fuel_capacity))
 	_ = tx.TransmitFrame(context.Background(), frame)
 
-	// Write current fuel mass to CAN on PID 0xd2
-	fuel_mass = status.CarStatusData.M_fuelInTank
-	frame.ID = 0xd2
-	frame.Length = 4
+	// Write current fuel mass to CAN (current fuel in liters)
+	frame.ID = 0x406
+	frame.Length = 2
+	fuel_mass = (uint16)(float32(status.CarStatusData.M_fuelInTank) / 0.01)
 	UnsignedBigEndianToCanFrame(&frame, uint64(fuel_mass))
 	// log.Println("status CAN frame is", frame)
 	_ = tx.TransmitFrame(context.Background(), frame)
